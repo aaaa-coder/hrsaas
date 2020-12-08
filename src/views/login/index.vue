@@ -57,7 +57,7 @@
         style="width: 100%; margin-bottom: 30px"
         class="loginBtn"
         @click.native.prevent="handleLogin"
-      >登录冲冲冲</el-button>
+      >登录冲冲冲{{ $store.state.user.token }}</el-button>
 
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
@@ -69,7 +69,6 @@
 
 <script>
 import { isValidMobile, isValidPassword } from '@/utils/validate'
-import { login } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -120,9 +119,7 @@ export default {
       })
     },
     handleLogin() {
-      login(this.loginForm).then(res => {
-        console.log(res)
-      })
+      this.$store.dispatch('user/login', this.loginForm)
     }
   }
 }
