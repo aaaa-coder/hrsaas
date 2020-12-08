@@ -69,6 +69,7 @@
 
 <script>
 import { isValidMobile, isValidPassword } from '@/utils/validate'
+import { login } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -81,8 +82,8 @@ export default {
     }
     return {
       loginForm: {
-        mobile: 'admin',
-        password: '111111'
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
         mobile: [
@@ -119,22 +120,8 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      login(this.loginForm).then(res => {
+        console.log(res)
       })
     }
   }
