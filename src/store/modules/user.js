@@ -1,15 +1,19 @@
 import { setToken, getToken } from '@/utils/auth'
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import { Message } from 'element-ui'
 export default {
   namespaced: true,
   state: {
-    token: getToken()
+    token: getToken(),
+    userInfo: {}
   },
   mutations: {
     setToken(state, data) {
       state.token = data
       setToken(data)
+    },
+    setUserInfo(state, data) {
+      state.userInfo = data
     }
   },
   actions: {
@@ -18,6 +22,11 @@ export default {
       const result = await login(data)
       Message.success('登录成功')
       context.commit('setToken', result)
+    },
+    async getUserInfo(context) {
+      const result = await getUserInfo()
+      context.commit('setUserInfo', result)
+      return result
     }
   }
 }
