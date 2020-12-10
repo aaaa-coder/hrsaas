@@ -1,5 +1,6 @@
 import { setToken, getToken } from '@/utils/auth'
 import { login } from '@/api/user'
+import { Message } from 'element-ui'
 export default {
   namespaced: true,
   state: {
@@ -14,10 +15,12 @@ export default {
   actions: {
     async login(context, data) {
       // login(data)是自己导入的方法，其中res为result
-      const result = await login(data)
-      console.log(result)
-      if (result.data.message === '操作成功！') {
-        context.commit('setToken', result.data.data)
+      try {
+        const result = await login(data)
+        Message.success('登录成功')
+        context.commit('setToken', result)
+      } catch (error) {
+        console.log(error)
       }
     }
   }

@@ -23,6 +23,10 @@ service.interceptors.response.use(res => {
     Message.error(message)
     return Promise.reject(new Error(message))
   }
+}, err => {
+  console.dir(err)
+  Message.error(err.message)
+  return Promise.reject(new Error(err.message))
 })
 
 export default service
