@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from 'vuex'
+import store from '@/store'
 
 // create an axios instance
 const service = axios.create({
@@ -34,7 +34,7 @@ service.interceptors.response.use(res => {
 }, err => {
   console.dir(err)
   Message.error(err.message)
-  return Promise.reject(new Error(err.message))
+  return Promise.reject(err.message)
 })
 
 export default service
