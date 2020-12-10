@@ -8,6 +8,11 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {}
+export function getInfo() {
+  return request({
+    method: 'post',
+    url: '/sys/profile'
+  })
+}
 
 export function logout() {}
