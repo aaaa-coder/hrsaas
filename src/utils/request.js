@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import store from 'vuex'
 
 // create an axios instance
 const service = axios.create({
@@ -10,7 +11,14 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use()
+service.interceptors.request.use(config => {
+  if (store.getters.token) {
+    config.headers.Authorization = `Bearer ${store.getters.token}`
+  }
+  return config
+}, error => {
+  return Promise.reject(error)
+})
 
 // response interceptor
 service.interceptors.response.use(res => {
