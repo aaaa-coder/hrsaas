@@ -15,13 +15,9 @@ export default {
   actions: {
     async login(context, data) {
       // login(data)是自己导入的方法，其中res为result
-      try {
-        const result = await login(data)
-        Message.success('登录成功')
-        context.commit('setToken', result)
-      } catch (error) {
-        console.log(error)
-      }
+      const result = await login(data)
+      Message.success('登录成功')
+      context.commit('setToken', result)
     }
   }
 }

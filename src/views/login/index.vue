@@ -69,7 +69,7 @@
 
 <script>
 import { isValidMobile, isValidPassword } from '@/utils/validate'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data() {
@@ -119,8 +119,13 @@ export default {
       })
     },
     handleLogin() {
-      this.$store.dispatch('user/login', this.loginForm)
-    }
+      this.$store.dispatch('user/login', this.loginForm).then(() => {
+        this.$router.push('/')
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    ...mapActions(['user/login'])
   }
 }
 </script>
