@@ -36,15 +36,13 @@ export default {
 .sidebarLogoFade-leave-to {
   opacity: 0;
 }
-.sidebar-container {
-      background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
-}
+
 .sidebar-logo-container {
   position: relative;
   width: 100%;
   height: 50px;
   line-height: 50px;
-  // background: #2b2f3a;
+  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
@@ -57,6 +55,7 @@ export default {
       vertical-align: middle;
       margin-right: 12px;
     }
+    // 大图样式
 
     & .sidebar-title {
       display: inline-block;
@@ -77,5 +76,6 @@ export default {
       height: 32px;
     }
   }
+  // 小图样式
 }
 </style>
