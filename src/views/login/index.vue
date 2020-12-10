@@ -57,7 +57,7 @@
         style="width: 100%; margin-bottom: 30px"
         class="loginBtn"
         @click.native.prevent="handleLogin"
-      >登录冲冲冲{{ $store.state.user.token }}</el-button>
+      >登录冲冲冲{{ $store.getters.token }}</el-button>
 
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
