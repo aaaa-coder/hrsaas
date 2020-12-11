@@ -1,5 +1,5 @@
 import { setToken, getToken } from '@/utils/auth'
-import { login, getInfo } from '@/api/user'
+import { login, getInfo as getUserInfo, getDetailById } from '@/api/user'
 import { Message } from 'element-ui'
 export default {
   namespaced: true,
@@ -17,17 +17,29 @@ export default {
     }
   },
   actions: {
+    // 登录
     async login(context, data) {
       // login(data)是自己导入的方法，其中res为result
       const result = await login(data)
       Message.success('登录成功')
       context.commit('setToken', result)
     },
-
-    async getUserInfo(context) {
-      const result = await getInfo()
-      context.commit('setUserInfo', result)
+    // 获取用户简单信息
+    async getUserInfo({ commit }) {
+      const result = await getUserInfo()
+      commit('setUserInfo', result)
       return result
+    },
+    // 获取详细信息
+    async getDetailById({ commit }) {
+      // result 是用户的信息
+      const result = await getUserInfo()
+      const baseInfo = await getDetailById(result.userId)
+      // 解开拼接
+      const baseResult = { ...result, ...baseInfo }
+      console.log(baseResult)
+      commit('setUserInfo', baseResult)
+      return baseResult
     }
   }
 }
