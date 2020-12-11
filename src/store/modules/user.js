@@ -1,6 +1,7 @@
-import { setToken, getToken } from '@/utils/auth'
+import { setToken, getToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getInfo as getUserInfo, getDetailById } from '@/api/user'
 import { Message } from 'element-ui'
+
 export default {
   namespaced: true,
   state: {
@@ -14,6 +15,15 @@ export default {
     },
     setUserInfo(state, data) {
       state.userInfo = data
+    },
+    // 删除token
+    removeToken(state) {
+      state.token = ''
+      removeToken()
+    },
+    // 删除用户数据
+    removeUserInfo(state) {
+      state.userInfo = {}
     }
   },
   actions: {
@@ -23,6 +33,7 @@ export default {
       const result = await login(data)
       Message.success('登录成功')
       context.commit('setToken', result)
+      setTimeStamp()
     },
     // 获取用户简单信息
     async getUserInfo({ commit }) {
@@ -31,15 +42,21 @@ export default {
       return result
     },
     // 获取详细信息
-    async getDetailById(context) {
+    async getDetailById({ commit }) {
       // result 是用户的信息
       const result = await getUserInfo()
       const baseInfo = await getDetailById(result.userId)
       // 解开拼接
       const baseResult = { ...result, ...baseInfo }
       console.log(baseResult)
-      context.commit('setUserInfo', baseResult)
+      commit('setUserInfo', baseResult)
       return baseResult
+    },
+    async logout({ commit }) {
+      // 删除token
+      commit('removeToken')
+      // 删除用户信息
+      commit('removeUserInfo')
     }
   }
 }
