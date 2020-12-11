@@ -19,6 +19,7 @@ service.interceptors.request.use(config => {
     if (isTimeOut()) {
       store.dispatch('user/logout')
       router.push('/login')
+      // 报告错误类型
       return Promise.reject(new Error('token过期了'))
     } else {
       config.headers.Authorization = `Bearer ${store.getters.token}`
@@ -40,10 +41,16 @@ service.interceptors.response.use(res => {
     Message.error(message)
     return Promise.reject(new Error(message))
   }
-}, err => {
-  console.dir(err)
-  Message.error(err.message)
-  return Promise.reject(err.message)
+}, error => {
+  console.dir(error)
+  if (error.response && error.response.data && error.response.data.code === 10002) {
+    store.dispatch('user/logout')
+    router.push('/login')
+    Message.error(error.response.data.message + '，请登录')
+  } else {
+    Message.error(error.message)
+  }
+  return Promise.reject(error.message)
 })
 
 function isTimeOut() {
