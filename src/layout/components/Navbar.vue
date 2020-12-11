@@ -14,7 +14,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="staffPhoto" class="user-avatar">
+          <img v-imageerror="'defaultImg'" :src="staffPhoto" class="user-avatar">
           <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -42,8 +42,13 @@ export default {
   components: {
     Hamburger
   },
+  data() {
+    return {
+      defaultImg: require('@/assets/common/bigUserHeader.png')
+    }
+  },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'staffPhoto'])
+    ...mapGetters(['sidebar', 'name', 'staffPhoto'])
   },
   methods: {
     toggleSideBar() {

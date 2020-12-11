@@ -31,14 +31,14 @@ export default {
       return result
     },
     // 获取详细信息
-    async getDetailById({ commit }) {
+    async getDetailById(context) {
       // result 是用户的信息
       const result = await getUserInfo()
       const baseInfo = await getDetailById(result.userId)
       // 解开拼接
       const baseResult = { ...result, ...baseInfo }
       console.log(baseResult)
-      commit('setUserInfo', baseResult)
+      context.commit('setUserInfo', baseResult)
       return baseResult
     }
   }
