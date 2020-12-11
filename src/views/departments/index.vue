@@ -5,7 +5,7 @@
         <el-tab-pane label="组织架构" />
         <el-card class="tree-card">
           <!-- 用了一个行列布局 -->
-          <TreeTools :data="江苏传智播客教育科技股份有限公司" :is-root="true" />
+          <TreeTools :data="company" :is-root="true" />
           <!-- 卡片内的树 -->
           <el-tree :data="departs" :props="defaultProps" :default-expand-all="true">
             <!-- 传入内容 插槽内容 会循环多次 有多少节点 就循环多少次 -->
@@ -31,22 +31,31 @@ export default {
       departs: [
         {
           name: '总裁办',
+          manager: '老赵',
           children: [
             {
-              name: '董事会'
+              name: '董事会',
+              manager: '老钱'
             }
           ]
         },
         {
-          name: '行政部'
+          name: '行政部',
+          manager: '老孙'
+
         },
         {
-          name: '人事部'
+          name: '人事部',
+          manager: '老李'
         }
       ],
       defaultProps: {
         label: 'name',
         children: 'children'
+      },
+      company: {
+        name: '江苏传智播客教育科技股份有限公司',
+        manager: '负责人'
       }
     }
   }
