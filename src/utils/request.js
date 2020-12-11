@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import { getTimeStamp } from '@/utils/auth'
+import router from '@/router'
 
+const timeOut = 7200
 // create an axios instance
 const service = axios.create({
   // 设置开发基准路径
@@ -13,7 +16,13 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(config => {
   if (store.getters.token) {
-    config.headers.Authorization = `Bearer ${store.getters.token}`
+    if (isTimeOut()) {
+      store.dispatch('user/logout')
+      router.push('/login')
+      return Promise.reject(new Error('token过期了'))
+    } else {
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
   }
   return config
 }, error => {
@@ -37,4 +46,10 @@ service.interceptors.response.use(res => {
   return Promise.reject(err.message)
 })
 
+function isTimeOut() {
+  const nowDate = Date.now()
+  const timeStamp = getTimeStamp()
+  return (nowDate - timeStamp) / 1000 >= timeOut
+}
 export default service
+
