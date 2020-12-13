@@ -16,6 +16,6 @@ export function addDepartments(data) {
 export function delDepartments(id) {
   return request({
     method: 'delete',
-    url: `/company/department/${id}`
+    url: `/company/department/` + id
   })
 }

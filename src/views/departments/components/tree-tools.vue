@@ -55,10 +55,10 @@ export default {
         console.log('edit')
       }
       if (operate === 'del') {
-        this.$confirm('确定要删除该部门吗', '删除部门').then(async() => {
+        this.$confirm('确定要删除该部门吗', '删除部门', { confirmButtonText: '毁灭吧，赶紧的', cancelButtonText: '我觉得我还能再抢救一下', type: 'warning' }).then(async() => {
           try {
-            const result = await delDepartments(this.data.id)
-            console.log(result)
+            await delDepartments(this.data.id)
+            this.$emit('addDepts')
           } catch (error) {
             console.log(error)
           }
