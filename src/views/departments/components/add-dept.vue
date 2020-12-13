@@ -30,7 +30,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments } from '@/api/departments'
+import { getDepartments, addDepartments } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
@@ -87,7 +87,19 @@ export default {
       this.people = await getEmployeeSimple()
     },
     btnOk() {
-      this.$refs.form.validate().catch(() => {})
+      this.$refs.form.validate(async isOk => {
+        try {
+          if (isOk) {
+            // console.log(111)
+            // console.log({ ...this.formData, pid: this.treeNode.id })
+            await addDepartments({ ...this.formData, pid: this.treeNode.id })
+            this.$emit('addDepts')
+            this.$emit('update:showDialog', false)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      })
     }
   }
 }

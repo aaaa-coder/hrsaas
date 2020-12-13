@@ -14,7 +14,7 @@
           </el-tree>
         </el-card>
       </el-tabs>
-      <AddDept :show-dialog="showDialog" :tree-node="node" />
+      <AddDept :show-dialog.sync="showDialog" :tree-node="node" @addDepts="loadPage" />
     </div>
 
   </div>
@@ -49,15 +49,18 @@ export default {
     }
   },
   created() {
-    getDepartments().then(res => {
-      this.company = {
-        name: res.companyName,
-        manager: '负责人'
-      }
-      this.departs = convertTreeData(res.depts, '')
-    })
+    this.loadPage()
   },
   methods: {
+    loadPage() {
+      getDepartments().then(res => {
+        this.company = {
+          name: res.companyName,
+          manager: '负责人'
+        }
+        this.departs = convertTreeData(res.depts, '')
+      })
+    },
     addDepts(node) {
       this.showDialog = true
       this.node = node
