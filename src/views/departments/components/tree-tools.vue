@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { delDepartments } from '@/api/departments'
 export default {
   props: {
     data: {
@@ -54,7 +55,14 @@ export default {
         console.log('edit')
       }
       if (operate === 'del') {
-        console.log('del')
+        this.$confirm('确定要删除该部门吗', '删除部门').then(async() => {
+          try {
+            const result = await delDepartments(this.data.id)
+            console.log(result)
+          } catch (error) {
+            console.log(error)
+          }
+        }).catch(() => {})
       }
     }
   }
