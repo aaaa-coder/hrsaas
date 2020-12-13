@@ -21,6 +21,7 @@
 <script>
 import TreeTools from './components/tree-tools'
 import { getDepartments } from '@/api/departments'
+import { convertTreeData } from '@/utils'
 export default {
   components: {
     TreeTools
@@ -29,27 +30,7 @@ export default {
     return {
       // 本来组织结构的数据应该从服务器获取,
       // 但是现在先不管, 写死数据作为测试
-      departs: [
-        {
-          name: '总裁办',
-          manager: '老赵',
-          children: [
-            {
-              name: '董事会',
-              manager: '老钱'
-            }
-          ]
-        },
-        {
-          name: '行政部',
-          manager: '老孙'
-
-        },
-        {
-          name: '人事部',
-          manager: '老李'
-        }
-      ],
+      departs: [],
       defaultProps: {
         label: 'name',
         children: 'children'
@@ -67,6 +48,7 @@ export default {
         name: res.companyName,
         manager: '负责人'
       }
+      this.departs = convertTreeData(res.depts, '')
     })
   }
 }
