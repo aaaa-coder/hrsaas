@@ -14,7 +14,9 @@
           </el-tree>
         </el-card>
       </el-tabs>
+      <AddDept />
     </div>
+
   </div>
 </template>
 
@@ -22,9 +24,11 @@
 import TreeTools from './components/tree-tools'
 import { getDepartments } from '@/api/departments'
 import { convertTreeData } from '@/utils'
+import AddDept from './components/add-dept'
 export default {
   components: {
-    TreeTools
+    TreeTools,
+    AddDept
   },
   data() {
     return {
