@@ -20,6 +20,7 @@
 
 <script>
 import TreeTools from './components/tree-tools'
+import { getDepartments } from '@/api/departments'
 export default {
   components: {
     TreeTools
@@ -54,10 +55,19 @@ export default {
         children: 'children'
       },
       company: {
-        name: '江苏传智播客教育科技股份有限公司',
-        manager: '负责人'
+        name: '',
+        manager: ''
       }
     }
+  },
+  created() {
+    getDepartments().then(res => {
+      console.log(res)
+      this.company = {
+        name: res.companyName,
+        manager: '负责人'
+      }
+    })
   }
 }
 </script>
