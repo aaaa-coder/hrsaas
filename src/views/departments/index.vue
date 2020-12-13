@@ -41,7 +41,8 @@ export default {
       },
       company: {
         name: '',
-        manager: ''
+        manager: '',
+        id: ''
       },
       showDialog: false,
       node: {}
