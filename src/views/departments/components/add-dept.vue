@@ -10,9 +10,10 @@
       <el-form-item label="部门编码" prop="code">
         <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
-      <!-- <el-form-item label="部门负责人" >
-        <el-select style="width:80%" placeholder="请选择" v-model="formData.manager"/>
-      </el-form-item> -->
+      <el-form-item label="部门负责人">
+        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployees" />
+        <!-- <el-option /> -->
+      </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input v-model="formData.introduce" style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3" />
       </el-form-item>
@@ -29,6 +30,7 @@
 </template>
 <script>
 import { getDepartments } from '@/api/departments'
+import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
     showDialog: {
@@ -62,6 +64,7 @@ export default {
         manager: '',
         introduce: ''
       },
+      employees: [],
       rules: {
         name: [
           { required: true, message: '部门名不能为空', trigger: 'blur' },
@@ -76,6 +79,11 @@ export default {
         introduce: [{ required: true, message: '部门介绍不能为空', trigger: 'blur' },
           { message: '部门名应该在1-300之间', min: 1, max: 300, trigger: 'blur' }]
       }
+    }
+  },
+  methods: {
+    async getEmployees() {
+      this.employees = await getEmployeeSimple()
     }
   }
 }
