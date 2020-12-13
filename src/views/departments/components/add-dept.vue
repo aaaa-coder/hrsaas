@@ -11,8 +11,9 @@
         <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
       <el-form-item label="部门负责人">
-        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployees" />
-        <!-- <el-option /> -->
+        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployees">
+          <el-option v-for="person in people" :key="person.id" :label="person.username" :value="person.username" />
+        </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input v-model="formData.introduce" style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3" />
@@ -64,7 +65,7 @@ export default {
         manager: '',
         introduce: ''
       },
-      employees: [],
+      people: [],
       rules: {
         name: [
           { required: true, message: '部门名不能为空', trigger: 'blur' },
@@ -83,7 +84,8 @@ export default {
   },
   methods: {
     async getEmployees() {
-      this.employees = await getEmployeeSimple()
+      this.people = await getEmployeeSimple()
+      console.log(this.people)
     }
   }
 }
