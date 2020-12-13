@@ -121,7 +121,7 @@ export function convertTreeData(list, pid) {
   list.forEach(item => {
     if (item.pid === pid) {
       const children = convertTreeData(list, item.id)
-      if (children.length > 0) {
+      if (children.length) {
         item.children = children
       }
       arr.push(item)
