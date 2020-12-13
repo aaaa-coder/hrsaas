@@ -14,7 +14,7 @@
           </el-tree>
         </el-card>
       </el-tabs>
-      <AddDept :show-dialog="showDialog" />
+      <AddDept :show-dialog="showDialog" :tree-node="node" />
     </div>
 
   </div>
@@ -49,7 +49,6 @@ export default {
   },
   created() {
     getDepartments().then(res => {
-      console.log(res)
       this.company = {
         name: res.companyName,
         manager: '负责人'
