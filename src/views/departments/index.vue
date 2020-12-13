@@ -9,12 +9,12 @@
           <!-- 卡片内的树 -->
           <el-tree :data="departs" :props="defaultProps" :default-expand-all="true">
             <!-- 传入内容 插槽内容 会循环多次 有多少节点 就循环多少次 -->
-            <TreeTools slot-scope="{data}" :data="data" />
+            <TreeTools slot-scope="{data}" :data="data" @addDepts="addDepts" />
             <!-- 作用域插槽 slot-scope="obj" 接收传递给插槽的数据   data 每个节点的数据对象-->
           </el-tree>
         </el-card>
       </el-tabs>
-      <AddDept />
+      <AddDept :show-dialog="showDialog" />
     </div>
 
   </div>
@@ -42,7 +42,9 @@ export default {
       company: {
         name: '',
         manager: ''
-      }
+      },
+      showDialog: false,
+      node: {}
     }
   },
   created() {
@@ -54,6 +56,12 @@ export default {
       }
       this.departs = convertTreeData(res.depts, '')
     })
+  },
+  methods: {
+    addDepts(node) {
+      this.showDialog = true
+      this.node = node
+    }
   }
 }
 </script>

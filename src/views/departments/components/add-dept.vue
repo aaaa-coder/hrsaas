@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门">
+  <el-dialog title="新增部门" :visible="showDialog">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <el-form label-width="120px">
@@ -10,9 +10,9 @@
       <el-form-item label="部门编码">
         <el-input style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
-      <el-form-item label="部门负责人">
+      <!-- <el-form-item label="部门负责人">
         <el-select style="width:80%" placeholder="请选择" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="部门介绍">
         <el-input style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3" />
       </el-form-item>
@@ -29,7 +29,12 @@
 </template>
 <script>
 export default {
-
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
