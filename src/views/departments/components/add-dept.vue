@@ -3,7 +3,7 @@
   <el-dialog title="新增部门" :visible="showDialog">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
-    <el-form :model="formData" label-width="120px" :rules="rules">
+    <el-form ref="form" :model="formData" label-width="120px" :rules="rules">
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="formData.name" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
@@ -23,7 +23,7 @@
     <el-row slot="footer" type="flex" justify="center">
       <!-- 列被分为24 -->
       <el-col :span="6">
-        <el-button type="primary" size="small">确定</el-button>
+        <el-button type="primary" size="small" @click="btnOk">确定</el-button>
         <el-button size="small">取消</el-button>
       </el-col>
     </el-row>
@@ -85,7 +85,9 @@ export default {
   methods: {
     async getEmployees() {
       this.people = await getEmployeeSimple()
-      console.log(this.people)
+    },
+    btnOk() {
+      this.$refs.form.validate().catch(() => {})
     }
   }
 }
