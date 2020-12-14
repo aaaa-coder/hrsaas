@@ -18,6 +18,7 @@
               :data="data"
               @addDepts="addDepts"
               @loadPage="loadPage"
+              @editDepts="editDepts"
             />
             <!-- 作用域插槽 slot-scope="obj" 接收传递给插槽的数据   data 每个节点的数据对象-->
           </el-tree>
@@ -76,7 +77,12 @@ export default {
     addDepts(node) {
       this.showDialog = true
       this.node = node
+    },
+    editDepts(node) {
+      this.showDialog = true
+      this.node = node
     }
+
   }
 }
 </script>

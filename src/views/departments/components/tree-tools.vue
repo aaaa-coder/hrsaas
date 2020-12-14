@@ -62,7 +62,7 @@ export default {
         this.$emit('addDepts', this.data)
       }
       if (operate === 'edit') {
-        console.log('edit')
+        this.$emit('editDepts', this.data)
       }
       if (operate === 'del') {
         this.$confirm('确定要删除该部门吗', '删除部门', {
