@@ -5,18 +5,42 @@
     <!-- 匿名插槽 -->
     <el-form ref="form" :model="formData" label-width="120px" :rules="rules">
       <el-form-item label="部门名称" prop="name">
-        <el-input v-model="formData.name" style="width:80%" placeholder="1-50个字符" />
+        <el-input
+          v-model="formData.name"
+          style="width: 80%"
+          placeholder="1-50个字符"
+        />
       </el-form-item>
       <el-form-item label="部门编码" prop="code">
-        <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符" />
+        <el-input
+          v-model="formData.code"
+          style="width: 80%"
+          placeholder="1-50个字符"
+        />
       </el-form-item>
       <el-form-item label="部门负责人">
-        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployees">
-          <el-option v-for="person in people" :key="person.id" :label="person.username" :value="person.username" />
+        <el-select
+          v-model="formData.manager"
+          style="width: 80%"
+          placeholder="请选择"
+          @focus="getEmployees"
+        >
+          <el-option
+            v-for="person in people"
+            :key="person.id"
+            :label="person.username"
+            :value="person.username"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
-        <el-input v-model="formData.introduce" style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3" />
+        <el-input
+          v-model="formData.introduce"
+          style="width: 80%"
+          placeholder="1-300个字符"
+          type="textarea"
+          :rows="3"
+        />
       </el-form-item>
     </el-form>
     <!-- el-dialog有专门放置底部操作栏的 插槽  具名插槽 -->
@@ -50,14 +74,18 @@ export default {
       // value是输入的值
       // console.log(value)
       // 判断是不是同名同父
-      depts.some(dept => dept.name === value && dept.pid === this.treeNode.id) ? callback(new Error('同一个部门下部门名不能相同')) : callback()
+      depts.some((dept) => dept.name === value && dept.pid === this.treeNode.id)
+        ? callback(new Error('同一个部门下部门名不能相同'))
+        : callback()
     }
     const validateDeptsCode = async(rule, value, callback) => {
       const { depts } = await getDepartments()
       // value是输入的值
       // console.log(value)
       // 值不能相同的情况下，还要确保有值
-      depts.some(dept => dept.code === value && value) ? callback(new Error('同一个部门下部门名不能相同')) : callback()
+      depts.some((dept) => dept.code === value && value)
+        ? callback(new Error('同一个部门下部门名不能相同'))
+        : callback()
     }
     return {
       formData: {
@@ -73,13 +101,26 @@ export default {
           { message: '部门名应该在1-50之间', min: 1, max: 50, trigger: 'blur' },
           { trigger: 'blur', validator: validateDeptsName }
         ],
-        code: [{ required: true, message: '部门编码不能为空', trigger: 'blur' },
-          { message: '部门编码应该在1-50之间', min: 1, max: 50, trigger: 'blur' },
+        code: [
+          { required: true, message: '部门编码不能为空', trigger: 'blur' },
+          {
+            message: '部门编码应该在1-50之间',
+            min: 1,
+            max: 50,
+            trigger: 'blur'
+          },
           { trigger: 'blur', validator: validateDeptsCode }
         ],
         manager: [{ required: true, trigger: 'change' }],
-        introduce: [{ required: true, message: '部门介绍不能为空', trigger: 'blur' },
-          { message: '部门名应该在1-300之间', min: 1, max: 300, trigger: 'blur' }]
+        introduce: [
+          { required: true, message: '部门介绍不能为空', trigger: 'blur' },
+          {
+            message: '部门名应该在1-300之间',
+            min: 1,
+            max: 300,
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -88,7 +129,7 @@ export default {
       this.people = await getEmployeeSimple()
     },
     btnOk() {
-      this.$refs.form.validate(async isOk => {
+      this.$refs.form.validate(async(isOk) => {
         if (isOk) {
           try {
             // console.log(111)
@@ -113,5 +154,4 @@ export default {
 </script>
 
 <style>
-
 </style>
