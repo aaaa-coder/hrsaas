@@ -54,7 +54,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments, addDepartments } from '@/api/departments'
+import { getDepartments, addDepartments, getDeptDetails } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 import { Message } from 'element-ui'
 export default {
@@ -124,6 +124,11 @@ export default {
       }
     }
   },
+  computed: {
+    title() {
+
+    }
+  },
   methods: {
     async getEmployees() {
       this.people = await getEmployeeSimple()
@@ -148,6 +153,10 @@ export default {
     btnCancel() {
       this.$refs.form.resetFields()
       this.$emit('update:showDialog', false)
+    },
+
+    async getDeptDetails() {
+      this.formData = await getDeptDetails(this.treeNode.id)
     }
   }
 }

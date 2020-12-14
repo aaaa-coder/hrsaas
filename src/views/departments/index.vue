@@ -25,6 +25,7 @@
         </el-card>
       </el-tabs>
       <AddDept
+        ref="addDept"
         :show-dialog.sync="showDialog"
         :tree-node="node"
         @addDepts="loadPage"
@@ -81,6 +82,9 @@ export default {
     editDepts(node) {
       this.showDialog = true
       this.node = node
+      this.$nextTick(() => {
+        this.$refs.addDept.getDeptDetails()
+      })
     }
 
   }
