@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
+  <el-dialog :title="title" :visible="showDialog" @close="btnCancel">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <el-form ref="form" :model="formData" label-width="120px" :rules="rules">
@@ -126,7 +126,7 @@ export default {
   },
   computed: {
     title() {
-
+      return this.formData.id ? '编辑部门' : '新增部门'
     }
   },
   methods: {
