@@ -34,6 +34,7 @@
 
 <script>
 import { delDepartments } from '@/api/departments'
+import { Message } from 'element-ui'
 export default {
   props: {
     data: {
@@ -58,7 +59,9 @@ export default {
         this.$confirm('确定要删除该部门吗', '删除部门', { confirmButtonText: '毁灭吧，赶紧的', cancelButtonText: '我觉得我还能再抢救一下', type: 'warning' }).then(async() => {
           try {
             await delDepartments(this.data.id)
-            this.$emit('addDepts')
+            Message.success('删除部门成功')
+            this.$emit('update:showDialog', false)
+            this.$emit('loadPage')
           } catch (error) {
             console.log(error)
           }

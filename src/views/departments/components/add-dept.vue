@@ -32,6 +32,7 @@
 <script>
 import { getDepartments, addDepartments } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
+import { Message } from 'element-ui'
 export default {
   props: {
     showDialog: {
@@ -88,16 +89,18 @@ export default {
     },
     btnOk() {
       this.$refs.form.validate(async isOk => {
-        try {
-          if (isOk) {
+        if (isOk) {
+          try {
             // console.log(111)
+            // console.log({ ...this.formData, pid: this.treeNode.id })
             // console.log({ ...this.formData, pid: this.treeNode.id })
             await addDepartments({ ...this.formData, pid: this.treeNode.id })
             this.$emit('addDepts')
+            Message.success('部门添加成功')
             this.$emit('update:showDialog', false)
+          } catch (error) {
+            console.log(error)
           }
-        } catch (error) {
-          console.log(error)
         }
       })
     },
