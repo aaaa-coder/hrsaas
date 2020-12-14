@@ -151,6 +151,12 @@ export default {
       })
     },
     btnCancel() {
+      this.formData = {
+        name: '',
+        code: '',
+        manager: '',
+        introduce: ''
+      }
       this.$refs.form.resetFields()
       this.$emit('update:showDialog', false)
     },
