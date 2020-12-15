@@ -14,11 +14,15 @@
               <el-table-column prop="name" label="姓名" width="160" />
               <el-table-column prop="description" label="描述" />
               <el-table-column label="操作" width="200">
-                <el-button size="small" type="primary">编辑</el-button>
-                <el-button
-                  size="small"
-                  type="danger"
-                >删除</el-button></el-table-column>
+                <template slot-scope="scope">
+                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="delRoleById(scope.row.id)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
             </el-table>
 
             <el-row
@@ -76,7 +80,7 @@
 </template>
 
 <script>
-import { getRoleList } from '@/api/setting'
+import { deleteRole, getRoleList } from '@/api/setting'
 export default {
   data() {
     return {
@@ -106,8 +110,22 @@ export default {
     currentChange(newPage) {
       this.pageInfo.page = newPage
       this.getRoleList()
-    }
-  }
+    },
+    async delRoleById(id) {
+      try {
+        await this.$confirm('确认删除该角色吗', '删除角色', {
+          confirmButtonText: '毁灭吧，赶紧的',
+          cancelButtonText: '我觉得我还能再抢救一下',
+          type: 'warning'
+        })
+        // 只有点击了确定 才能进入到下方
+        await deleteRole(id) // 调用删除接口
+        this.getRoleList() // 重新加载数据
+        this.$message.success('删除角色成功')
+      } catch (error) {
+        console.log(error)
+      }
+    } }
 }
 </script>
 
