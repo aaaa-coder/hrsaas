@@ -5,39 +5,37 @@
         <el-tabs v-model="manage">
           <el-tab-pane label="角色管理" name="role">
             <el-button type="primary" size="small">+增加角色</el-button>
-            <el-table
-              :data="list"
-              style="width: 100%"
-            >
-              <el-table-column
-                prop="date"
-                label="序号"
-                width="160"
-              >
+            <el-table :data="list" style="width: 100%">
+              <el-table-column label="序号" width="160">
                 <template slot-scope="scope">
-                  {{ scope.$index+1 }}
+                  {{ scope.$index + 1 }}
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="name"
-                label="姓名"
-                width="160"
-              />
-              <el-table-column
-                prop="description"
-                label="描述"
-              />
-              <el-table-column
-                label="操作"
-                width="200"
-              >
+              <el-table-column prop="name" label="姓名" width="160" />
+              <el-table-column prop="description" label="描述" />
+              <el-table-column label="操作" width="200">
                 <el-button size="small" type="primary">编辑</el-button>
-                <el-button size="small" type="danger">删除</el-button></el-table-column>
+                <el-button
+                  size="small"
+                  type="danger"
+                >删除</el-button></el-table-column>
             </el-table>
 
-            <el-row type="flex" justify="end" align="bottom" style="height: 60px">
+            <el-row
+              type="flex"
+              justify="end"
+              align="bottom"
+              style="height: 60px"
+            >
               <!-- 分页组件 -->
-              <el-pagination layout="prev,pager,next" :total="total" />
+              <el-pagination
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total"
+                :page-size="5"
+                :page-sizes="[2, 3, 5, 10, 20]"
+                @size-change="sizeChange"
+                @current-change="currentChange"
+              />
             </el-row>
           </el-tab-pane>
 
@@ -50,25 +48,29 @@
                 show-icon
                 :closable="false"
               />
-              <el-form label-width="160px" style="margin-top:50px">
+              <el-form label-width="160px" style="margin-top: 50px">
                 <el-form-item label="公司名称">
-                  <el-input disabled style="width:400px" />
+                  <el-input disabled style="width: 400px" />
                 </el-form-item>
                 <el-form-item label="公司地址">
-                  <el-input disabled style="width:400px" />
+                  <el-input disabled style="width: 400px" />
                 </el-form-item>
                 <el-form-item label="邮箱">
-                  <el-input disabled style="width:400px" />
+                  <el-input disabled style="width: 400px" />
                 </el-form-item>
                 <el-form-item label="备注">
-                  <el-input type="textarea" :rows="3" disabled style="width:400px" />
+                  <el-input
+                    type="textarea"
+                    :rows="3"
+                    disabled
+                    style="width: 400px"
+                  />
                 </el-form-item>
               </el-form>
             </el-tab-pane>
           </el-tab-pane>
         </el-tabs>
       </el-card>
-
     </div>
   </div>
 </template>
@@ -92,15 +94,22 @@ export default {
   },
   methods: {
     async getRoleList() {
-      const { total, rows } = await getRoleList(this.page)
+      const { total, rows } = await getRoleList(this.pageInfo)
       this.total = total
       this.list = rows
-      console.log(rows)
+      // console.log(rows)
+    },
+    sizeChange(newSize) {
+      this.pageInfo.pagesize = newSize
+      this.getRoleList()
+    },
+    currentChange(newPage) {
+      this.pageInfo.page = newPage
+      this.getRoleList()
     }
   }
 }
 </script>
 
 <style>
-
 </style>
