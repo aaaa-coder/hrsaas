@@ -69,13 +69,13 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 export const asyncRoutes = [
-  approvalsRouter,
   departmentsRouter,
+  settingRouter,
+  approvalsRouter,
   employeesRouter,
   permissionRouter,
   attendancesRouter,
   salarysRouter,
-  settingRouter,
   socialRouter,
   testRouter
 ]
