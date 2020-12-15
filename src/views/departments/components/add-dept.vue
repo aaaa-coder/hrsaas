@@ -54,7 +54,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments, addDepartments, getDeptDetails } from '@/api/departments'
+import { getDepartments, addDepartments, getDeptDetails, updateDepartments } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 import { Message } from 'element-ui'
 export default {
@@ -137,12 +137,15 @@ export default {
       this.$refs.form.validate(async(isOk) => {
         if (isOk) {
           try {
-            // console.log(111)
-            // console.log({ ...this.formData, pid: this.treeNode.id })
-            // console.log({ ...this.formData, pid: this.treeNode.id })
-            await addDepartments({ ...this.formData, pid: this.treeNode.id })
+            if (this.formData.id) {
+              console.log(this.formData)
+              await updateDepartments(this.formData)
+              Message.success('部门修改成功')
+            } else {
+              await addDepartments({ ...this.formData, pid: this.treeNode.id })
+              Message.success('部门添加成功')
+            }
             this.$emit('addDepts')
-            Message.success('部门添加成功')
             this.$emit('update:showDialog', false)
           } catch (error) {
             console.log(error)
