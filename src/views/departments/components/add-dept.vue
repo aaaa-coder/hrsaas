@@ -74,18 +74,30 @@ export default {
       // value是输入的值
       // console.log(value)
       // 判断是不是同名同父
-      depts.some((dept) => dept.name === value && dept.pid === this.treeNode.id)
-        ? callback(new Error('同一个部门下部门名不能相同'))
-        : callback()
+      if (this.formData.id) {
+        depts.some((dept) => dept.id !== this.formData.id && dept.name === value && dept.pid === this.treeNode.id)
+          ? callback(new Error('同一个部门下部门名不能相同'))
+          : callback()
+      } else {
+        depts.some((dept) => dept.name === value && dept.pid === this.treeNode.id)
+          ? callback(new Error('同一个部门下部门名不能相同'))
+          : callback()
+      }
     }
     const validateDeptsCode = async(rule, value, callback) => {
       const { depts } = await getDepartments()
       // value是输入的值
       // console.log(value)
       // 值不能相同的情况下，还要确保有值
-      depts.some((dept) => dept.code === value && value)
-        ? callback(new Error('同一个部门下部门名不能相同'))
-        : callback()
+      if (this.formData.id) {
+        depts.some((dept) => dept.id !== this.formData.id && dept.code === value && value)
+          ? callback(new Error('同一个部门下部门名不能相同'))
+          : callback()
+      } else {
+        depts.some((dept) => dept.code === value && value)
+          ? callback(new Error('同一个部门下部门名不能相同'))
+          : callback()
+      }
     }
     return {
       formData: {
