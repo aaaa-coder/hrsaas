@@ -6,13 +6,13 @@
           <el-tab-pane label="角色管理" name="role">
             <el-button type="primary" size="small">+增加角色</el-button>
             <el-table
-              :data="tableData"
+              :data="list"
               style="width: 100%"
             >
               <el-table-column
                 prop="date"
                 label="序号"
-                width="120"
+                width="160"
               >
                 <template slot-scope="scope">
                   {{ scope.$index+1 }}
@@ -21,14 +21,13 @@
               <el-table-column
                 prop="name"
                 label="姓名"
-                width="120"
+                width="160"
               />
               <el-table-column
-                prop="address"
+                prop="description"
                 label="描述"
               />
               <el-table-column
-                prop="option"
                 label="操作"
                 width="200"
               >
@@ -38,7 +37,7 @@
 
             <el-row type="flex" justify="end" align="bottom" style="height: 60px">
               <!-- 分页组件 -->
-              <el-pagination layout="prev,pager,next" :total="50" />
+              <el-pagination layout="prev,pager,next" :total="total" />
             </el-row>
           </el-tab-pane>
 
@@ -51,7 +50,7 @@
                 show-icon
                 :closable="false"
               />
-              <el-form label-width="120px" style="margin-top:50px">
+              <el-form label-width="160px" style="margin-top:50px">
                 <el-form-item label="公司名称">
                   <el-input disabled style="width:400px" />
                 </el-form-item>
@@ -75,27 +74,28 @@
 </template>
 
 <script>
+import { getRoleList } from '@/api/setting'
 export default {
   data() {
     return {
       manage: 'role',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      list: [],
+      pageInfo: {
+        page: 1,
+        pagesize: 10
+      },
+      total: null
+    }
+  },
+  created() {
+    this.getRoleList(this.pageInfo)
+  },
+  methods: {
+    async getRoleList() {
+      const { total, rows } = await getRoleList(this.page)
+      this.total = total
+      this.list = rows
+      console.log(rows)
     }
   }
 }
