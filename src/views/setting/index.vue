@@ -43,36 +43,39 @@
             </el-row>
           </el-tab-pane>
 
-          <el-tab-pane label="公司管理" name="company">
-            123
-            <el-tab-pane label="公司信息">
-              <el-alert
-                title="对公司名称、公司地址、营业执照、公司地区的更新，将使得公司资料被重新审核，请谨慎修改"
-                type="info"
-                show-icon
-                :closable="false"
-              />
-              <el-form label-width="160px" style="margin-top: 50px">
-                <el-form-item label="公司名称">
-                  <el-input disabled style="width: 400px" />
-                </el-form-item>
-                <el-form-item label="公司地址">
-                  <el-input disabled style="width: 400px" />
-                </el-form-item>
-                <el-form-item label="邮箱">
-                  <el-input disabled style="width: 400px" />
-                </el-form-item>
-                <el-form-item label="备注">
-                  <el-input
-                    type="textarea"
-                    :rows="3"
-                    disabled
-                    style="width: 400px"
-                  />
-                </el-form-item>
-              </el-form>
-            </el-tab-pane>
+          <el-tab-pane label="公司信息">
+            <el-alert
+              title="对公司名称、公司地址、营业执照、公司地区的更新，将使得公司资料被重新审核，请谨慎修改"
+              type="info"
+              show-icon
+              :closable="false"
+            />
+            <el-form label-width="160px" style="margin-top: 50px">
+              <el-form-item label="公司名称">
+                <el-input v-model="companyInfo.name" disabled style="width: 400px" />
+              </el-form-item>
+              <el-form-item label="公司地址">
+                <el-input v-model="companyInfo.companyAddress" disabled style="width: 400px" />
+              </el-form-item>
+              <el-form-item label="公司电话">
+                <el-input v-model="companyInfo.companyPhone" disabled style="width: 400px" />
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <el-input v-model="companyInfo.mailbox" disabled style="width: 400px" />
+              </el-form-item>
+              <el-form-item label="备注">
+                <el-input
+                  v-model="companyInfo.remarks"
+                  type="textarea"
+                  :rows="3"
+                  disabled
+                  style="width: 400px"
+                  resize="none"
+                />
+              </el-form-item>
+            </el-form>
           </el-tab-pane>
+
         </el-tabs>
       </el-card>
     </div>
@@ -80,7 +83,8 @@
 </template>
 
 <script>
-import { deleteRole, getRoleList } from '@/api/setting'
+import { deleteRole, getCompanyInfo, getRoleList } from '@/api/setting'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -90,11 +94,26 @@ export default {
         page: 1,
         pagesize: 10
       },
-      total: null
+      total: null,
+      companyInfo: {}
+    }
+  },
+  computed: {
+    ...mapGetters(['companyId'])
+  },
+  watch: {
+    companyId: {
+      handler() {
+        if (this.companyId) {
+          this.getCompanyInfo()
+        }
+      },
+      immediate: true
     }
   },
   created() {
-    this.getRoleList(this.pageInfo)
+    this.getRoleList()
+    this.getCompanyInfo()
   },
   methods: {
     async getRoleList() {
@@ -102,6 +121,10 @@ export default {
       this.total = total
       this.list = rows
       // console.log(rows)
+    },
+    async getCompanyInfo() {
+      this.companyInfo = await getCompanyInfo(this.companyId)
+      console.log(this.companyInfo)
     },
     sizeChange(newSize) {
       this.pageInfo.pagesize = newSize
@@ -125,7 +148,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    } }
+    }
+  }
 }
 </script>
 
