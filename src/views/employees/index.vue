@@ -27,7 +27,7 @@
           />
           <el-table-column label="部门" sortable="" prop="departmentName" />
           <el-table-column label="入职时间" sortable="" prop="timeOfEntry">
-            <template slot-scope="{row}">
+            <template slot-scope="{ row }">
               {{ row.timeOfEntry | formatDate }}
             </template>
           </el-table-column>
@@ -46,9 +46,11 @@
         <!-- 分页组件 -->
         <el-row type="flex" justify="end" align="middle" style="height: 60px">
           <el-pagination
-            layout="total,prev, pager, next, jumper"
+            layout="total, sizes, prev, pager, next, jumper"
             :total="pageSetting.total"
             :page-sizes="[2, 3, 5, 10, 20]"
+            @current-change="currentChange"
+            @size-change="sizeChange"
           />
         </el-row>
       </el-card>
@@ -81,8 +83,18 @@ export default {
       console.log(rows)
     },
     formatEmployment(row, cplumn, cellvalue, index) {
-      const obj = EmployeeEnum.hireType.find(item => item.id === cellvalue)
+      const obj = EmployeeEnum.hireType.find((item) => item.id === cellvalue)
       return obj ? obj.value : '其他'
+    },
+
+    async currentChange(newCurrent) {
+      this.pageSetting.page = newCurrent
+      await this.getEmployeeList()
+    },
+
+    async sizeChange(newSize) {
+      this.pageSetting.size = newSize
+      await this.getEmployeeList()
     }
   }
 }
