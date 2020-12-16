@@ -26,6 +26,11 @@ Vue.use(ElementUI)
 import components from '@/components'
 Vue.use(components)
 
+import * as filters from '@/filters'
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key])
+})
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -23,9 +23,14 @@
             label="聘用形式"
             sortable=""
             prop="formOfEmployment"
+            :formatter="formatEmployment"
           />
           <el-table-column label="部门" sortable="" prop="departmentName" />
-          <el-table-column label="入职时间" sortable="" prop="timeOfEntry" />
+          <el-table-column label="入职时间" sortable="" prop="timeOfEntry">
+            <template slot-scope="{row}">
+              {{ row.timeOfEntry | formatDate }}
+            </template>
+          </el-table-column>
           <el-table-column label="账户状态" sortable="" prop="enableState" />
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template>
@@ -40,7 +45,11 @@
         </el-table>
         <!-- 分页组件 -->
         <el-row type="flex" justify="end" align="middle" style="height: 60px">
-          <el-pagination layout="total,prev, pager, next, jumper" :total="pageSetting.total" :page-sizes="[2,3,5,10,20]" />
+          <el-pagination
+            layout="total,prev, pager, next, jumper"
+            :total="pageSetting.total"
+            :page-sizes="[2, 3, 5, 10, 20]"
+          />
         </el-row>
       </el-card>
     </div>
@@ -49,6 +58,7 @@
 
 <script>
 import { getEmployeeList } from '@/api/employees'
+import EmployeeEnum from '@/api/constant/employees'
 export default {
   data() {
     return {
@@ -69,6 +79,10 @@ export default {
       this.list = rows
       this.pageSetting.total = total
       console.log(rows)
+    },
+    formatEmployment(row, cplumn, cellvalue, index) {
+      const obj = EmployeeEnum.hireType.find(item => item.id === cellvalue)
+      return obj ? obj.value : '其他'
     }
   }
 }
