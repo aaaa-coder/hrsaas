@@ -6,10 +6,10 @@
         <template slot="after">
           <el-button size="small" type="warning">导入</el-button>
           <el-button size="small" type="danger">导出</el-button>
-          <el-button size="small" type="primary">新增员工</el-button>
+          <el-button size="small" type="primary" @click="showDialog=true">新增员工</el-button>
         </template>
       </PageTools>
-
+      <!-- 数据表格 -->
       <el-card>
         <el-table border :data="list">
           <el-table-column label="序号" sortable="">
@@ -54,6 +54,8 @@
           />
         </el-row>
       </el-card>
+      <!-- diglog框 -->
+      <AddEmployee :show-dialog.sync="showDialog" />
     </div>
   </div>
 </template>
@@ -61,7 +63,11 @@
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
+import AddEmployee from './components/add-employee'
 export default {
+  components: {
+    AddEmployee
+  },
   data() {
     return {
       list: [],
@@ -69,7 +75,8 @@ export default {
         page: 1,
         size: 10,
         total: 0
-      }
+      },
+      showDialog: false
     }
   },
   created() {
@@ -102,6 +109,7 @@ export default {
         console.log(error)
       }
     }
+
   }
 }
 </script>
