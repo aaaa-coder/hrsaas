@@ -15,7 +15,7 @@
               <el-table-column prop="description" label="描述" />
               <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
-                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button size="small" type="primary" @click="editRole">编辑</el-button>
                   <el-button
                     size="small"
                     type="danger"
@@ -40,6 +40,24 @@
                 @size-change="sizeChange"
                 @current-change="currentChange"
               />
+
+              <el-dialog title="编辑弹层" :visible="showDialog">
+                <el-form :model="roleForm" label-width="120px">
+                  <el-form-item label="角色名称" prop="name">
+                    <el-input v-model="roleForm.name" />
+                  </el-form-item>
+                  <el-form-item label="角色描述">
+                    <el-input v-model="roleForm.description" />
+                  </el-form-item>
+                </el-form>
+                <!-- 底部 -->
+                <el-row slot="footer" type="flex" justify="center">
+                  <el-col :span="6">
+                    <el-button size="small">取消</el-button>
+                    <el-button size="small" type="primary">确定</el-button>
+                  </el-col>
+                </el-row>
+              </el-dialog>
             </el-row>
           </el-tab-pane>
 
@@ -95,7 +113,12 @@ export default {
         pagesize: 10
       },
       total: null,
-      companyInfo: {}
+      companyInfo: {},
+      roleForm: {
+        name: '',
+        description: ''
+      },
+      showDialog: false
     }
   },
   computed: {
@@ -103,6 +126,7 @@ export default {
   },
   watch: {
     companyId: {
+      // 从其他页面跳转就执行
       handler() {
         if (this.companyId) {
           this.getCompanyInfo()
@@ -113,23 +137,22 @@ export default {
   },
   created() {
     this.getRoleList()
-    this.getCompanyInfo()
   },
   methods: {
     async getRoleList() {
       const { total, rows } = await getRoleList(this.pageInfo)
       this.total = total
       this.list = rows
-      // console.log(rows)
     },
     async getCompanyInfo() {
       this.companyInfo = await getCompanyInfo(this.companyId)
-      console.log(this.companyInfo)
     },
+    // 条数改变
     sizeChange(newSize) {
       this.pageInfo.pagesize = newSize
       this.getRoleList()
     },
+    // 页码改变
     currentChange(newPage) {
       this.pageInfo.page = newPage
       this.getRoleList()
@@ -148,6 +171,10 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 编辑角色
+    editRole() {
+      this.showDialog = true
     }
   }
 }
