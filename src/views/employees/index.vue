@@ -13,11 +13,17 @@
       <el-card>
         <el-table border :data="list">
           <el-table-column label="序号" sortable="">
-            <template slot-scope="{$index}">{{ (pageSetting.page-1)*pageSetting.size +1 +$index }}</template>
+            <template slot-scope="{ $index }">{{
+              (pageSetting.page - 1) * pageSetting.size + 1 + $index
+            }}</template>
           </el-table-column>
           <el-table-column label="姓名" sortable="" prop="username" />
           <el-table-column label="工号" sortable="" prop="workNumber" />
-          <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" />
+          <el-table-column
+            label="聘用形式"
+            sortable=""
+            prop="formOfEmployment"
+          />
           <el-table-column label="部门" sortable="" prop="departmentName" />
           <el-table-column label="入职时间" sortable="" prop="timeOfEntry" />
           <el-table-column label="账户状态" sortable="" prop="enableState" />
@@ -34,7 +40,7 @@
         </el-table>
         <!-- 分页组件 -->
         <el-row type="flex" justify="end" align="middle" style="height: 60px">
-          <el-pagination layout="prev, pager, next" />
+          <el-pagination layout="total,prev, pager, next, jumper" :total="pageSetting.total" :page-sizes="[2,3,5,10,20]" />
         </el-row>
       </el-card>
     </div>
@@ -69,5 +75,4 @@ export default {
 </script>
 
 <style>
-
 </style>
