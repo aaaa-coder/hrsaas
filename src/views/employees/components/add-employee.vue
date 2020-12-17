@@ -45,13 +45,13 @@
           @focus="getDepartments"
           @blur="showTree=false;loading=false"
         />
-        <div v-if="treeData.length > 0 && loading" class="tree-wrapper">
+        <div v-if="treeData.length > 0" class="tree-wrapper">
           <el-tree
-            v-if="showTree"
             :data="treeData"
             :props="{ label: 'name' }"
             :default-expand-all="true"
             class="tree"
+            @node-click="selectNode"
           />
         </div>
       </el-form-item>
@@ -91,8 +91,6 @@ export default {
       EmployeeEnum, // 在data中定义数据
       // 表单数据
       treeData: [], // 定义数组接收树形数据
-      showTree: false, // 控制树形的显示或者隐藏
-      loading: false, // 控制树的显示或者隐藏进度条
       formData: {
         username: '',
         mobile: '',
@@ -139,11 +137,13 @@ export default {
 
   methods: {
     async getDepartments() {
-      this.showTree = true
-      this.loading = true
       const { depts } = await getDepartments()
       this.treeData = convertTreeData(depts, '')
       console.log(this.treeData)
+    },
+    selectNode(data) {
+      this.formData.departmentName = data.name
+      this.treeData = []
     }
   }
 }
