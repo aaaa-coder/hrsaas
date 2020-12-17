@@ -28,7 +28,9 @@
           v-model="formData.formOfEmployment"
           style="width: 50%"
           placeholder="请选择"
-        />
+        >
+          <el-option v-for="item in EmployeeEnum.hireType" :key="item.id" :value="item.id" :label="item.value" />
+        </el-select>
       </el-form-item>
       <el-form-item label="工号" prop="workNumber">
         <el-input
@@ -68,7 +70,7 @@
       <el-row type="flex" justify="center">
         <el-col :span="6">
           <el-button size="small" @click="btnCancel">取消</el-button>
-          <el-button type="primary" size="small">确定</el-button>
+          <el-button type="primary" size="small" @click="btnOk">确定</el-button>
         </el-col>
       </el-row>
     </template>
@@ -79,6 +81,7 @@
 import EmployeeEnum from '@/api/constant/employees'
 import { getDepartments } from '@/api/departments'
 import { convertTreeData } from '@/utils'
+// import { addEmployee } from '@/api/employees'
 export default {
   props: {
     showDialog: {
@@ -157,6 +160,10 @@ export default {
       }
       this.$emit('update:showDialog', false)
       this.$refs.formEmployee.resetFields()
+    },
+    async btnOk() {
+      this.$refs.formEmployee.validate()
+      // const res = await addEmployee(this.formData)
     }
   }
 }
