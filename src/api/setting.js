@@ -19,3 +19,17 @@ export function getCompanyInfo(companyId) {
     url: `/company/${companyId}`
   })
 }
+
+export function getRoleDetail(id) {
+  return request({
+    url: '/sys/role/' + id
+  })
+}
+
+export function updateRole(data) {
+  return request({
+    url: `/sys/role/${data.id}`,
+    data,
+    method: 'put'
+  })
+}

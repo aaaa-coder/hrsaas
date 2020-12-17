@@ -15,7 +15,7 @@
               <el-table-column prop="description" label="描述" />
               <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
-                  <el-button size="small" type="primary" @click="editRole">编辑</el-button>
+                  <el-button size="small" type="primary" @click="editRole(scope.row.id)">编辑</el-button>
                   <el-button
                     size="small"
                     type="danger"
@@ -41,8 +41,8 @@
                 @current-change="currentChange"
               />
 
-              <el-dialog title="编辑弹层" :visible="showDialog">
-                <el-form :model="roleForm" label-width="120px">
+              <el-dialog title="编辑弹层" :visible="showDialog" @close="btnCancel">
+                <el-form ref="roleForm" :model="roleForm" label-width="120px">
                   <el-form-item label="角色名称" prop="name">
                     <el-input v-model="roleForm.name" />
                   </el-form-item>
@@ -53,8 +53,8 @@
                 <!-- 底部 -->
                 <el-row slot="footer" type="flex" justify="center">
                   <el-col :span="6">
-                    <el-button size="small">取消</el-button>
-                    <el-button size="small" type="primary">确定</el-button>
+                    <el-button size="small" @click="btnCancel">取消</el-button>
+                    <el-button size="small" type="primary" @click="btnOk">确定</el-button>
                   </el-col>
                 </el-row>
               </el-dialog>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { deleteRole, getCompanyInfo, getRoleList } from '@/api/setting'
+import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -139,6 +139,7 @@ export default {
     this.getRoleList()
   },
   methods: {
+    // 获取角色列表
     async getRoleList() {
       const { total, rows } = await getRoleList(this.pageInfo)
       this.total = total
@@ -157,6 +158,7 @@ export default {
       this.pageInfo.page = newPage
       this.getRoleList()
     },
+    // 删除角色
     async delRoleById(id) {
       try {
         await this.$confirm('确认删除该角色吗', '删除角色', {
@@ -173,8 +175,29 @@ export default {
       }
     },
     // 编辑角色
-    editRole() {
+    async editRole(id) {
       this.showDialog = true
+      this.roleForm = await getRoleDetail(id)
+    },
+    // 获取角色详情
+    async btnOk() {
+      try {
+        this.$refs.roleForm.validate()
+        await updateRole(this.roleForm)
+        this.$message.success('修改成功')
+        this.showDialog = false
+        this.getRoleList()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    btnCancel() {
+      this.roleForm = {
+        name: '',
+        description: ''
+      }
+      this.$refs.roleForm.resetFields()
+      this.showDialog = false
     }
   }
 }
@@ -182,3 +205,4 @@ export default {
 
 <style>
 </style>
+
