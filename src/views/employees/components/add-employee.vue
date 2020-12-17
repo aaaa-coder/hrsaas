@@ -43,9 +43,11 @@
           style="width: 50%"
           placeholder="请选择部门"
           @focus="getDepartments"
+          @blur="showTree=false;loading=false"
         />
-        <div v-if="treeData.length > 0" class="tree-wrapper">
+        <div v-if="treeData.length > 0 && loading" class="tree-wrapper">
           <el-tree
+            v-if="showTree"
             :data="treeData"
             :props="{ label: 'name' }"
             :default-expand-all="true"
@@ -137,6 +139,8 @@ export default {
 
   methods: {
     async getDepartments() {
+      this.showTree = true
+      this.loading = true
       const { depts } = await getDepartments()
       this.treeData = convertTreeData(depts, '')
       console.log(this.treeData)
