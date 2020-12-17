@@ -105,6 +105,8 @@ export default {
     async delEmployee(id) {
       try {
         await delEmployee(id)
+        this.$message.success('删除成功')
+        this.getEmployeeList()
       } catch (error) {
         console.log(error)
       }

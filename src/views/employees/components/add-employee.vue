@@ -81,7 +81,7 @@
 import EmployeeEnum from '@/api/constant/employees'
 import { getDepartments } from '@/api/departments'
 import { convertTreeData } from '@/utils'
-// import { addEmployee } from '@/api/employees'
+import { addEmployee } from '@/api/employees'
 export default {
   props: {
     showDialog: {
@@ -131,10 +131,7 @@ export default {
         ],
         timeOfEntry: [{ required: true, message: '入职时间', trigger: 'blur' }]
       }
-      // defaultProps: {
-      //   children: 'introduce',
-      //   label: 'name'
-      // }
+
     }
   },
 
@@ -163,7 +160,10 @@ export default {
     },
     async btnOk() {
       this.$refs.formEmployee.validate()
-      // const res = await addEmployee(this.formData)
+      await addEmployee(this.formData)
+      this.$emit('update:showDialog', false)
+      this.$message.success('添加成功')
+      this.$parent.getEmployeeList()
     }
   }
 }
