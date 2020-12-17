@@ -122,8 +122,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['companyId'])
+    ...mapGetters(['companyId']),
+    title() {
+      return this.roleForm.id ? '编辑角色' : '新增角色'
+    }
   },
+
   watch: {
     companyId: {
       // 从其他页面跳转就执行
@@ -133,9 +137,6 @@ export default {
         }
       },
       immediate: true
-    },
-    title() {
-      this.roleForm.id ? '编辑角色' : '新增角色'
     }
   },
   created() {
