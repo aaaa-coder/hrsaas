@@ -4,7 +4,7 @@
       <el-card>
         <el-tabs v-model="manage">
           <el-tab-pane label="角色管理" name="role">
-            <el-button type="primary" size="small">+增加角色</el-button>
+            <el-button type="primary" size="small" @click="addRole">+增加角色</el-button>
             <el-table :data="list" style="width: 100%">
               <el-table-column label="序号" width="160">
                 <template slot-scope="scope">
@@ -41,7 +41,7 @@
                 @current-change="currentChange"
               />
 
-              <el-dialog title="编辑弹层" :visible="showDialog" @close="btnCancel">
+              <el-dialog :title="title" :visible="showDialog" @close="btnCancel">
                 <el-form ref="roleForm" :model="roleForm" label-width="120px">
                   <el-form-item label="角色名称" prop="name">
                     <el-input v-model="roleForm.name" />
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole } from '@/api/setting'
+import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole, addRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -133,6 +133,9 @@ export default {
         }
       },
       immediate: true
+    },
+    title() {
+      this.roleForm.id ? '编辑角色' : '新增角色'
     }
   },
   created() {
@@ -183,8 +186,13 @@ export default {
     async btnOk() {
       try {
         this.$refs.roleForm.validate()
-        await updateRole(this.roleForm)
-        this.$message.success('修改成功')
+        if (this.roleForm.id) {
+          await updateRole(this.roleForm)
+          this.$message.success('修改成功')
+        } else {
+          await addRole(this.roleForm)
+          this.$message.success('增加成功')
+        }
         this.showDialog = false
         this.getRoleList()
       } catch (error) {
@@ -198,6 +206,9 @@ export default {
       }
       this.$refs.roleForm.resetFields()
       this.showDialog = false
+    },
+    async addRole() {
+      this.showDialog = true
     }
   }
 }
