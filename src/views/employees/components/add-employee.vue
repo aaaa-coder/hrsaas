@@ -136,15 +136,18 @@ export default {
   },
 
   methods: {
+    // 获取部门列表
     async getDepartments() {
       const { depts } = await getDepartments()
       this.treeData = convertTreeData(depts, '')
       console.log(this.treeData)
     },
+    // 初始化数据
     selectNode(data) {
       this.formData.departmentName = data.name
       this.treeData = []
     },
+    // 点击取消
     btnCancel() {
       this.formData = {
         username: '',
@@ -158,6 +161,7 @@ export default {
       this.$emit('update:showDialog', false)
       this.$refs.formEmployee.resetFields()
     },
+    // 点击确定
     async btnOk() {
       this.$refs.formEmployee.validate()
       await addEmployee(this.formData)

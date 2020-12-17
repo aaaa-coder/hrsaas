@@ -83,25 +83,28 @@ export default {
     this.getEmployeeList()
   },
   methods: {
+    // 获取员工详情
     async getEmployeeList() {
       const { rows, total } = await getEmployeeList(this.pageSetting)
       this.list = rows
       this.pageSetting.total = total
     },
+    // 将数字转为聘请方式
     formatEmployment(row, cplumn, cellvalue, index) {
       const obj = EmployeeEnum.hireType.find((item) => item.id === cellvalue)
       return obj ? obj.value : '其他'
     },
-
+    // 当前页码改变
     async currentChange(newCurrent) {
       this.pageSetting.page = newCurrent
       await this.getEmployeeList()
     },
-
+    // 页面条数改变
     async sizeChange(newSize) {
       this.pageSetting.size = newSize
       await this.getEmployeeList()
     },
+    // 删除员工
     async delEmployee(id) {
       try {
         await delEmployee(id)
