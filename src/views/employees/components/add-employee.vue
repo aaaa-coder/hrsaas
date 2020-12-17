@@ -1,7 +1,7 @@
 <template>
-  <el-dialog title="新增员工" :visible="showDialog">
+  <el-dialog title="新增员工" :visible="showDialog" @close="btnCancel">
     <!-- 表单 -->
-    <el-form label-width="120px" :model="formData" :rules="rules">
+    <el-form ref="formEmployee" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="姓名" prop="username">
         <el-input
           v-model="formData.username"
@@ -67,7 +67,7 @@
     <template v-slot:footer>
       <el-row type="flex" justify="center">
         <el-col :span="6">
-          <el-button size="small">取消</el-button>
+          <el-button size="small" @click="btnCancel">取消</el-button>
           <el-button type="primary" size="small">确定</el-button>
         </el-col>
       </el-row>
@@ -144,6 +144,19 @@ export default {
     selectNode(data) {
       this.formData.departmentName = data.name
       this.treeData = []
+    },
+    btnCancel() {
+      this.formData = {
+        username: '',
+        mobile: '',
+        formOfEmployment: '',
+        workNumber: '',
+        departmentName: '',
+        timeOfEntry: '',
+        correctionTime: ''
+      }
+      this.$emit('update:showDialog', false)
+      this.$refs.formEmployee.resetFields()
     }
   }
 }
