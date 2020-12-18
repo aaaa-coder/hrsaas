@@ -27,6 +27,10 @@ export default {
       })
       console.log(data)
       await importEmployee(data)
+      this.$message.success('数据导入成功')
+      setTimeout(() => {
+        this.$router.push('/employees')
+      }, 1000)
     },
     cnToEn(item, dictionary) {
       const newItem = {}
