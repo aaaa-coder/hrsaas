@@ -90,6 +90,17 @@ export default {
     }
   },
   data() {
+    const checkTowTime = (rule, vaule, callback) => {
+      if (!this.formData.timeOfEntry || !this.formData.correctionTime) {
+        callback()
+      } else {
+        const entryTime = new Date(this.formData.timeOfEntry).getTime()
+        const newCorrectionTime = new Date(this.formData.correctionTime).getTime()
+        if (entryTime > newCorrectionTime) {
+          callback(new Error('转正日期不能比入职早'))
+        }
+      }
+    }
     return {
       EmployeeEnum, // 在data中定义数据
       // 表单数据
@@ -129,7 +140,15 @@ export default {
         departmentName: [
           { required: true, message: '部门不能为空', trigger: 'change' }
         ],
-        timeOfEntry: [{ required: true, message: '入职时间', trigger: 'blur' }]
+        timeOfEntry: [
+          { required: true, message: '入职时间', trigger: 'blur' },
+          { trigger: 'blur', validator: checkTowTime },
+          { trigger: 'change', validator: checkTowTime }
+        ],
+        correctionTime: [
+          { trigger: 'blur', validator: checkTowTime },
+          { trigger: 'change', validator: checkTowTime }
+        ]
       }
 
     }
