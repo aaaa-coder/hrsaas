@@ -20,4 +20,10 @@ export function getDetailById(id) {
     url: `/sys/user/${id}`
   })
 }
-export function logout() {}
+// 获取员工详情
+export function getUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
+
