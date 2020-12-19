@@ -27,12 +27,10 @@
 </template>
 
 <script>
+import { CloudConfig } from '@/CloudConfig'
 import COS from 'cos-js-sdk-v5' // 引入腾讯云的包
 // 需要实例化
-const cos = new COS({
-  SecretId: 'AKID0mqfEWqlUzIbeSkGRL6c7ML6c0B93To9',
-  SecretKey: 'JFwNZdeRF2iOp03FFsGNDm44vWFitmNF'
-}) // 实例化的包 已经具有了上传的能力 可以上传到该账号里面的存储桶了
+const cos = new COS(CloudConfig) // 实例化的包 已经具有了上传的能力 可以上传到该账号里面的存储桶了
 export default {
   data() {
     return {
@@ -94,7 +92,7 @@ export default {
         //  上传文件到腾讯云
         cos.putObject({
           // 配置
-          Bucket: 'laogao-1302806742', // 存储桶名称
+          Bucket: 'hello-man-1304560172', // 存储桶名称
           Region: 'ap-guangzhou', // 存储桶地域
           Key: params.file.name, // 文件名作为key
           StorageClass: 'STANDARD', // 此类写死
