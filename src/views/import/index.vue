@@ -18,7 +18,8 @@ export default {
         '手机号': 'mobile',
         '姓名': 'username',
         '转正日期': 'correctionTime',
-        '工号': 'workNumber'
+        '工号': 'workNumber',
+        '部门': 'departmentName'
       }
       //   console.log(header)
       //   console.log(results)
