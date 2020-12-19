@@ -86,8 +86,9 @@ export default {
     // 获取员工详情
     async getEmployeeList() {
       const { rows, total } = await getEmployeeList(this.pageSetting)
+      rows.shift()
       this.list = rows
-      this.pageSetting.total = total
+      this.pageSetting.total = total - 1
     },
     // 将数字转为聘请方式
     formatEmployment(row, cplumn, cellvalue, index) {

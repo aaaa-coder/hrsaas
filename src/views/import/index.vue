@@ -27,11 +27,15 @@ export default {
         return this.cnToEn(item, dictionary)
       })
       console.log(data)
-      await importEmployee(data)
-      this.$message.success('数据导入成功')
-      setTimeout(() => {
-        this.$router.push('/employees')
-      }, 1000)
+      if (this.$route.query.type) {
+        await importEmployee(data)
+        this.$message.success('数据导入成功')
+        setTimeout(() => {
+          this.$router.back()
+        }, 1000)
+      } else {
+        this.$message.error('未知的导入类型')
+      }
     },
     cnToEn(item, dictionary) {
       const newItem = {}
