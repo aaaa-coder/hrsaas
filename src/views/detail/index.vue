@@ -18,7 +18,9 @@
           </el-row>
         </el-tab-pane>
 
-        <el-tab-pane label="个人详情" name="detail">配置管理</el-tab-pane>
+        <el-tab-pane label="个人详情" name="detail">
+          <component :is="UserInfoName" />
+        </el-tab-pane>
 
         <el-tab-pane label="岗位详情" name="job">角色管理</el-tab-pane>
       </el-tabs>
@@ -29,9 +31,14 @@
 <script>
 import { getUserDetailById } from '@/api/user'
 import { saveUserDetailById } from '@/api/employees'
+import UserInfo from './components/user-info'
 export default {
+  components: {
+    UserInfo
+  },
   data() {
     return {
+      UserInfoName: 'UserInfo',
       employeesInfo: 'acount',
       userId: this.$route.params.id,
       userInfo: {
