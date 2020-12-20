@@ -115,20 +115,49 @@ export default {
         console.log(error)
       }
     },
+    // 导出数据函数
     async exportData() {
       try {
         const excel = await import('@/vendor/Export2Excel')
         console.log(excel)
+
+        const headersEnum = {
+          '姓名': 'username',
+          '手机号': 'mobile',
+          '入职日期': 'timeOfEntry',
+          '聘用形式': 'formOfEmployment',
+          '转正日期': 'correctionTime',
+          '工号': 'workNumber',
+          '部门': 'departmentName'
+        }
+
+        const header = Object.keys(headersEnum)
+        // console.log(header)
+        // 发送页码
         const pageSettings = {
           page: 1,
           size: this.pageSetting.size
         }
         // 调用获取员工方法
         const { rows } = await getEmployeeList(pageSettings)
-        console.log(rows)
+        const data = rows.map(item => {
+          const newItem = this.obj2Array(item, headersEnum)
+          return newItem
+        })
       } catch (error) {
         console.log(error)
       }
+    },
+    obj2Array(item, dictionary) {
+      const array = []
+      for (const key in dictionary) {
+        const newKey = dictionary[key]
+        const value = item[newKey]
+        console.log(newKey, 'key--------------')
+        console.log(value, 'value--------------')
+        array.push(value)
+      }
+      return array
     }
 
   }
