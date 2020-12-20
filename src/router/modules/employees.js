@@ -11,7 +11,7 @@ export default {
     {
       path: 'detail:id',
       hidden: true,
-      component: () => import('@/views/detail'),
+      component: () => import('@/views/employees/detail'),
       meta: { title: '员工详情' }
     }
   ]
