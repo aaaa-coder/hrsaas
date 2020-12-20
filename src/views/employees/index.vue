@@ -144,6 +144,7 @@ export default {
           const newItem = this.obj2Array(item, headersEnum)
           return newItem
         })
+        excel.export_json_to_excel({ header, data })
       } catch (error) {
         console.log(error)
       }
@@ -156,6 +157,8 @@ export default {
         console.log(newKey, 'key--------------')
         console.log(value, 'value--------------')
         array.push(value)
+        // 数字里只放value，相当于一个用户的所有数据
+        console.log(array, '-------------------------------------')
       }
       return array
     }
