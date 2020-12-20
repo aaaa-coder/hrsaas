@@ -119,6 +119,13 @@ export default {
       try {
         const excel = await import('@/vendor/Export2Excel')
         console.log(excel)
+        const pageSettings = {
+          page: 1,
+          size: this.pageSetting.size
+        }
+        // 调用获取员工方法
+        const { rows } = await getEmployeeList(pageSettings)
+        console.log(rows)
       } catch (error) {
         console.log(error)
       }
