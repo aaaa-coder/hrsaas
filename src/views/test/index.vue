@@ -4,19 +4,21 @@
       <h2>
         测试
       </h2>
-      <uploadExcel />
+      <component :is="ImageUploadName" />
     </div>
   </div>
 </template>
 
 <script>
-import uploadExcel from '@/components/UploadExcel'
+import ImageUpload from '@/components/ImageUpload'
 export default {
   components: {
-    uploadExcel
+    ImageUpload
   },
   data() {
-
+    return {
+      ImageUploadName: 'ImageUpload'
+    }
   }
 }
 </script>
