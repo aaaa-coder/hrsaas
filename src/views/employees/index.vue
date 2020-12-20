@@ -64,6 +64,8 @@
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee'
+import { formatDate } from '@/filters'
+
 export default {
   components: {
     AddEmployee
@@ -153,7 +155,16 @@ export default {
       const array = []
       for (const key in dictionary) {
         const newKey = dictionary[key]
-        const value = item[newKey]
+        let value = item[newKey]
+        // 利用过滤器过滤时间
+        if (newKey === 'timeOfEntry' || newKey === 'correctionTime') {
+          value = formatDate(value)
+        }
+        // 修改聘用形式
+        if (newKey === 'formOfEmployment') {
+          const obj = EmployeeEnum.hireType.find(item => item.id === value)
+          value = obj ? obj.value : '临时工战士'
+        }
         console.log(newKey, 'key--------------')
         console.log(value, 'value--------------')
         array.push(value)
