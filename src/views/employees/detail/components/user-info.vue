@@ -373,12 +373,24 @@ export default {
       }
     },
     async savePersonal() {
-      await updatePersonal({ ...this.formData, id: this.userId })
+      const fileList = this.$refs.employeeStaffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        this.$message('上传未完毕，请等待')
+        return
+      }
+      // 修改发送数据
+      await updatePersonal({ ...this.formData, staffPhoto: fileList && fileList.length ? fileList[0].url : '' })
       this.$message.success('保存成功')
     },
     async saveUser() {
     //  调用父组件
-      await saveUserDetailById(this.userInfo)
+      const fileList = this.$refs.staffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        this.$message('图片未上传完毕')
+        return
+      }
+      // 重新传递数据
+      await saveUserDetailById({ ...this.userInfo, staffPhoto: fileList && fileList.length ? fileList[0].url : '' })
       this.$message.success('保存成功')
     },
     async getUserDetailById() {
