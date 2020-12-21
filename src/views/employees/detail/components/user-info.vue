@@ -58,7 +58,7 @@
         <el-col :span="12">
           <el-form-item label="员工头像">
             <!-- 放置上传图片 -->
-            <ImageUpload />
+            <ImageUpload ref="staffPhoto" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -379,6 +379,9 @@ export default {
     },
     async getUserDetailById() {
       this.userInfo = await getUserDetailById(this.userId)
+      if (this.userInfo.staffPhoto) {
+        this.$refs.staffPhoto.fileList = [{ url: this.userInfo.staffPhoto, upload: true }]
+      }
     }
   }
 }
