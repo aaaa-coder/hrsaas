@@ -17,7 +17,21 @@
               (pageSetting.page - 1) * pageSetting.size + 1 + $index
             }}</template>
           </el-table-column>
+
           <el-table-column label="姓名" sortable="" prop="username" />
+
+          <el-table-column label="头像" align="center">
+            <template slot-scope="{row}">
+              <img
+                slot="reference"
+                v-imageerror="require('@/assets/common/bigUserHeader.png')"
+                :src="row.staffPhoto "
+                style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+                alt=""
+              >
+            </template>
+          </el-table-column>
+
           <el-table-column label="工号" sortable="" prop="workNumber" />
           <el-table-column
             label="聘用形式"
@@ -178,5 +192,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+::v-deep img {
+  object-fit: cover;
+}
 </style>
