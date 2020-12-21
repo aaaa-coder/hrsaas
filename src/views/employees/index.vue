@@ -70,6 +70,12 @@
       </el-card>
       <!-- diglog框 -->
       <AddEmployee :show-dialog.sync="showDialog" />
+      <el-dialog title="二维码" :visible.sync="showCodeDialog">
+        <el-row type="flex" justify="center">
+          <canvas ref="myCanvas" />
+
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -86,6 +92,7 @@ export default {
   },
   data() {
     return {
+      showCodeDialog: false,
       list: [],
       pageSetting: {
         page: 1,
