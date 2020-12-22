@@ -52,7 +52,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="showRoleDialog=true">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -75,6 +75,20 @@
           <canvas ref="myCanvas" />
         </el-row>
       </el-dialog>
+
+      <el-dialog title="分配角色" :visible="showRoleDialog">
+        <!-- el-checkbox-group选中的是 当前用户所拥有的角色  需要绑定 当前用户拥有的角色-->
+        <el-checkbox-group>
+          <!-- 选项 -->
+        </el-checkbox-group>
+        <el-row slot="footer" type="flex" justify="center">
+          <el-col :span="6">
+            <el-button type="primary" size="small">确定</el-button>
+            <el-button size="small">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-dialog>
+
     </div>
   </div>
 </template>
@@ -93,6 +107,7 @@ export default {
   data() {
     return {
       showCodeDialog: false,
+      showRoleDialog: false,
       list: [],
       pageSetting: {
         page: 1,
