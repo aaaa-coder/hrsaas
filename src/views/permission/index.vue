@@ -4,13 +4,13 @@
       <!-- 头条 -->
       <PageTools>
         <template v-slot:after>
-          <el-button type="primary" size="small">添加权限</el-button>
+          <el-button type="primary" size="small" @click="addPermission(1,'0')">添加权限</el-button>
         </template>
       </PageTools>
 
       <!-- 下方的表格 -->
-      <el-table :data="list" row-key="id" border :default-expand-all="true">
-        <el-table-column label="权限名称" width="16 0px" prop="name" />
+      <el-table :data="list" row-key="id" border="" :default-expand-all="true">
+        <el-table-column label="权限名称" width="180px" prop="name" />
         <el-table-column align="center" label="权限标识" prop="code" />
         <el-table-column align="center" label="权限描述" prop="description" />
         <el-table-column align="center" label="操作">
@@ -45,7 +45,7 @@
         </el-form>
         <el-row slot="footer" type="flex" justify="center">
           <el-col :span="6">
-            <el-button size="small" type="primary">确定</el-button>
+            <el-button size="small" type="primary" @click="btnOk">确定</el-button>
             <el-button size="small">取消</el-button>
           </el-col>
         </el-row>
@@ -67,7 +67,7 @@ export default {
       list: [],
       formData: {
         name: '',
-        type: '',
+        type: 1,
         code: '',
         description: '',
         pid: '',
@@ -84,9 +84,15 @@ export default {
     async getPermissionList() {
       this.list = convertTreeData(await getPermissionList(), '0')
     },
-    addPermission(type, id) {
+    addPermission(type, pid) {
+      this.formData.type = type
+      this.formData.pid = pid
       this.showDialog = true
+    },
+    btnOk() {
+      console.log(this.formData)
     }
+
   }
 
 }
