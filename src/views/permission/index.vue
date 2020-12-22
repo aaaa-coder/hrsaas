@@ -27,6 +27,7 @@
 <script>
 import PageTools from '@/components/PageTools'
 import { getPermissionList } from '@/api/permission'
+import { convertTreeData } from '@/utils/index'
 export default {
   components: {
     PageTools
@@ -50,7 +51,7 @@ export default {
 
   methods: {
     async getPermissionList() {
-      const data = await getPermissionList()
+      const data = convertTreeData(await getPermissionList(), '0')
       console.log(data)
     }
   }
