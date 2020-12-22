@@ -16,7 +16,7 @@
         <el-table-column align="center" label="操作">
           <template slot-scope="{row}">
             <el-button type="primary" size="mini" @click="addPermission(2,row.id)">添加</el-button>
-            <el-button type="primary" size="mini">编辑</el-button>
+            <el-button type="primary" size="mini" @click="editPermission(row.id)">编辑</el-button>
             <el-button type="primary" size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -90,10 +90,12 @@ export default {
       this.formData.pid = pid
       this.showDialog = true
     },
-    btnOk() {
+    editPermission(id) {
+      this.showDialog = true
+    },
+    async btnOk() {
       try {
-        const data = addPermission(this.formData)
-        console.log(data)
+        await addPermission(this.formData)
         this.$message.success('权限添加成功')
         this.getPermissionList()
         this.showDialog = false
