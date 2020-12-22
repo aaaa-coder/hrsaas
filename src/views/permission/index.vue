@@ -9,13 +9,15 @@
       </PageTools>
 
       <!-- 下方的表格 -->
-      <el-table>
-        <el-table-column label="权限名称" width="140px" />
-        <el-table-column align="center" label="权限标识" />
-        <el-table-column align="center" label="权限描述" />
+      <el-table :data="list">
+        <el-table-column label="权限名称" width="140px" prop="name" />
+        <el-table-column align="center" label="权限标识" prop="code" />
+        <el-table-column align="center" label="权限描述" prop="description" />
         <el-table-column align="center" label="操作">
           <template>
-            <el-button type="text">添加</el-button>
+            <el-button type="primary" size="mini">添加</el-button>
+            <el-button type="primary" size="mini">编辑</el-button>
+            <el-button type="primary" size="mini">删除</el-button>
           </template>
         </el-table-column>
 
@@ -51,8 +53,8 @@ export default {
 
   methods: {
     async getPermissionList() {
-      const data = convertTreeData(await getPermissionList(), '0')
-      console.log(data)
+      this.list = convertTreeData(await getPermissionList(), '0')
+      console.log(this.list)
     }
   }
 
