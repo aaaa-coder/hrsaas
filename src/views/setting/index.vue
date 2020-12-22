@@ -111,6 +111,7 @@
           :show-checkbox="true"
           node-key="id"
           :default-checked-keys="selectCheck"
+          :check-strictly="true"
         />
         <!-- 确定 取消 -->
         <el-row slot="footer" type="flex" justify="center">
