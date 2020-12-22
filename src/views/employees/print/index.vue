@@ -359,6 +359,9 @@ export default {
       const userInfo = await getUserDetailById(this.userId)
       const jobInfo = await getJobDetail(this.userId) // 获取个人基本信息
       this.formData = { ...userInfo, ...jobInfo }
+    },
+    print() {
+      window.print()
     }
   }
 }
