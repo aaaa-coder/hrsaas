@@ -26,10 +26,35 @@
 
 <script>
 import PageTools from '@/components/PageTools'
+import { getPermissionList } from '@/api/permission'
 export default {
   components: {
     PageTools
+  },
+  data() {
+    return {
+      list: [],
+      formData: {
+        name: '',
+        type: '',
+        code: '',
+        description: '',
+        pid: '',
+        enVisible: ''
+      }
+    }
+  },
+  created() {
+    this.getPermissionList()
+  },
+
+  methods: {
+    async getPermissionList() {
+      const data = await getPermissionList()
+      console.log(data)
+    }
   }
+
 }
 </script>
 
