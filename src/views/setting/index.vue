@@ -13,8 +13,9 @@
               </el-table-column>
               <el-table-column prop="name" label="姓名" width="160" />
               <el-table-column prop="description" label="描述" />
-              <el-table-column label="操作" width="200">
+              <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
+                  <el-button size="small" type="primary" @click="editPerm(scope.row.id)">分配权限</el-button>
                   <el-button size="small" type="primary" @click="editRole(scope.row.id)">编辑</el-button>
                   <el-button
                     size="small"
@@ -40,7 +41,7 @@
                 @size-change="sizeChange"
                 @current-change="currentChange"
               />
-
+              <!-- 角色弹框 -->
               <el-dialog :title="title" :visible="showDialog" @close="btnCancel">
                 <el-form ref="roleForm" :model="roleForm" label-width="120px">
                   <el-form-item label="角色名称" prop="name">
@@ -96,6 +97,25 @@
 
         </el-tabs>
       </el-card>
+      <!-- 权限弹窗 -->
+      <el-dialog title="分配权限" :visible="showPermDialog">
+        <!-- 权限是一颗树 -->
+        <!-- 将数据绑定到组件上 -->
+        <!-- check-strictly 如果为true 那表示父子勾选时  不互相关联 如果为false就互相关联 -->
+        <!-- id作为唯一标识 -->
+        <el-tree
+          ref="permTree"
+          :data="permData"
+          :props="defaultProps"
+        />
+        <!-- 确定 取消 -->
+        <el-row slot="footer" type="flex" justify="center">
+          <el-col :span="6">
+            <el-button type="primary" size="small">确定</el-button>
+            <el-button size="small">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -106,6 +126,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      showPermDialog: false,
       manage: 'role',
       list: [],
       pageInfo: {
@@ -210,6 +231,9 @@ export default {
     },
     async addRole() {
       this.showDialog = true
+    },
+    editPerm(id) {
+      this.showPermDialog = true
     }
   }
 }
