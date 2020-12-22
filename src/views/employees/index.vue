@@ -52,7 +52,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small" @click="showRoleDialog=true">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -77,7 +77,7 @@
       </el-dialog>
 
       <!-- 角色框 -->
-      <AssignRole :show-role-dialog="showRoleDialog" />
+      <AssignRole ref="editRole" :show-role-dialog="showRoleDialog" />
     </div>
   </div>
 </template>
@@ -218,6 +218,11 @@ export default {
       const { rows } = await getRoleList()
       console.log(rows)
       this.list = rows
+    },
+    editRole(id) {
+      // 调用子组件的方法，这样就不用传递id
+      this.$refs.editRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
 
   }
