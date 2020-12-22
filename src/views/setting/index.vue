@@ -108,6 +108,9 @@
           :data="permList"
           :props="{label:'name'}"
           :default-expand-all="true"
+          :show-checkbox="true"
+          node-key="id"
+          :default-checked-keys="selectCheck"
         />
         <!-- 确定 取消 -->
         <el-row slot="footer" type="flex" justify="center">
@@ -131,6 +134,7 @@ export default {
   data() {
     return {
       permList: [],
+      selectCheck: [],
       showPermDialog: false,
       manage: 'role',
       list: [],
@@ -242,6 +246,9 @@ export default {
         // 获取权限列表
         const data = await getPermissionList(id)
         this.permList = convertTreeData(data, '0')
+        // 获取点击的id
+        const { permIds } = await getRoleDetail(id)
+        this.selectCheck = permIds
       } catch (error) {
         console.log(error)
       }
