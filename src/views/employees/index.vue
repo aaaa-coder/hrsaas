@@ -77,7 +77,7 @@
       </el-dialog>
 
       <!-- 角色框 -->
-      <AssignRole ref="editRole" :show-role-dialog="showRoleDialog" />
+      <AssignRole ref="editRole" :show-role-dialog="showRoleDialog" :user-id="userId" />
     </div>
   </div>
 </template>
@@ -102,6 +102,7 @@ export default {
     return {
       showCodeDialog: false,
       showRoleDialog: false,
+      userId: '',
       list: [],
       pageSetting: {
         page: 1,
@@ -220,6 +221,7 @@ export default {
       this.list = rows
     },
     editRole(id) {
+      this.userId = id
       // 调用子组件的方法，这样就不用传递id
       this.$refs.editRole.getUserDetailById(id)
       this.showRoleDialog = true
