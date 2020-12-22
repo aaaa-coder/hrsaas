@@ -105,8 +105,9 @@
         <!-- id作为唯一标识 -->
         <el-tree
           ref="permTree"
-          :data="permData"
-          :props="defaultProps"
+          :data="permList"
+          :props="{label:'name'}"
+          :default-expand-all="true"
         />
         <!-- 确定 取消 -->
         <el-row slot="footer" type="flex" justify="center">
@@ -121,11 +122,15 @@
 </template>
 
 <script>
-import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole, addRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
+import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole, addRole } from '@/api/setting'
+
+import { getPermissionList } from '@/api/permission'
+import { convertTreeData } from '@/utils'
 export default {
   data() {
     return {
+      permList: [],
       showPermDialog: false,
       manage: 'role',
       list: [],
@@ -232,7 +237,14 @@ export default {
     async addRole() {
       this.showDialog = true
     },
-    editPerm(id) {
+    async editPerm(id) {
+      try {
+        // 获取权限列表
+        const data = await getPermissionList(id)
+        this.permList = convertTreeData(data, '0')
+      } catch (error) {
+        console.log(error)
+      }
       this.showPermDialog = true
     }
   }
