@@ -1,25 +1,25 @@
 import request from '@/utils/request'
-
+// 获取员工
 export function getEmployeeSimple() {
   return request({
     url: '/sys/user/simple'
   })
 }
-
+// 获取员工列表
 export function getEmployeeList(params) {
   return request({
     url: '/sys/user',
     params
   })
 }
-
+// 删除员工
 export function delEmployee(id) {
   return request({
     url: `/sys/user/${id}`,
     method: 'delete'
   })
 }
-
+// 增加员工
 export function addEmployee(data) {
   return request({
     method: 'post',
@@ -27,7 +27,7 @@ export function addEmployee(data) {
     data
   })
 }
-
+// 导出员工
 export function importEmployee(data) {
   return request({
     method: 'post',
@@ -82,5 +82,14 @@ export function updateJob(data) {
     url: `/employees/${data.userId}/jobs`,
     method: 'put',
     data
+  })
+}
+
+// 给员工分配角色
+export function assignRoles(data) {
+  return request({
+    method: 'put',
+    data,
+    url: '/sys/user/assignRoles'
   })
 }
