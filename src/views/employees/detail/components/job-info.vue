@@ -2,6 +2,13 @@
   <div class="job-info">
     <!-- 基础信息 -->
     <el-form label-width="220px">
+      <el-row type="flex" justify="end">
+        <el-tooltip content="打印个人信息">
+          <router-link :to="`/employees/print/${userId}?type=baseInfo`">
+            <i class="el-icon-printer" style="font-size:20px" />
+          </router-link>
+        </el-tooltip>
+      </el-row>
       <div class="block">
         <div class="title">基础信息</div>
         <el-form-item label="岗位">

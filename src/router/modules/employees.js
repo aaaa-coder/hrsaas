@@ -16,7 +16,7 @@ export default {
     },
     {
       path: 'print/:id',
-      component: () => { import ('@/views/employees/print') },
+      component: () => import ('@/views/employees/print'),
       hidden: true,
       meta: { title: '打印页面' }
     }
