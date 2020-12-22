@@ -76,33 +76,27 @@
         </el-row>
       </el-dialog>
 
-      <el-dialog title="分配角色" :visible="showRoleDialog">
-        <!-- el-checkbox-group选中的是 当前用户所拥有的角色  需要绑定 当前用户拥有的角色-->
-        <el-checkbox-group>
-          <!-- 选项 -->
-        </el-checkbox-group>
-        <el-row slot="footer" type="flex" justify="center">
-          <el-col :span="6">
-            <el-button type="primary" size="small">确定</el-button>
-            <el-button size="small">取消</el-button>
-          </el-col>
-        </el-row>
-      </el-dialog>
-
+      <!-- 角色框 -->
+      <AssignRole :show-role-dialog="showRoleDialog" />
     </div>
   </div>
 </template>
 
 <script>
+import QRcode from 'qrcode'
+import { formatDate } from '@/filters'
+
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee'
-import { formatDate } from '@/filters'
-import QRcode from 'qrcode'
+
+import AssignRole from './detail/components/assign-role'
+import { getRoleList } from '@/api/setting'
 
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data() {
     return {
@@ -215,8 +209,15 @@ export default {
       this.showCodeDialog = true
       this.imageUrl = imgURl
     },
+    // 显示二维码
     showerweima() {
       QRcode.toCanvas(this.$refs.myCanvas, this.imageUrl)
+    },
+    //  获取所有角色
+    async getRoleList() {
+      const { rows } = await getRoleList()
+      console.log(rows)
+      this.list = rows
     }
 
   }
