@@ -98,7 +98,7 @@
         </el-tabs>
       </el-card>
       <!-- 权限弹窗 -->
-      <el-dialog title="分配权限" :visible="showPermDialog">
+      <el-dialog title="分配权限" :visible="showPermDialog" @close="btnPermCancel">
         <!-- 权限是一颗树 -->
         <!-- 将数据绑定到组件上 -->
         <!-- check-strictly 如果为true 那表示父子勾选时  不互相关联 如果为false就互相关联 -->
@@ -117,7 +117,7 @@
         <el-row slot="footer" type="flex" justify="center">
           <el-col :span="6">
             <el-button type="primary" size="small" @click="btnAddPerm">确定</el-button>
-            <el-button size="small">取消</el-button>
+            <el-button size="small" @click="btnPermCancel">取消</el-button>
           </el-col>
         </el-row>
       </el-dialog>
@@ -264,9 +264,15 @@ export default {
         // 调用树形组件的获取id方法
         const permIds = this.$refs.permTree.getCheckedKeys()
         await assignPerm({ id: id, permIds: permIds })
+        this.$message.success('分配权限成功')
+        this.showPermDialog = false
       } catch (error) {
         console.log(error)
       }
+    },
+    btnPermCancel() {
+      this.selectCheck = []
+      this.showPermDialog = false
     }
   }
 }
