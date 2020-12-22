@@ -23,7 +23,7 @@
 
       </el-table>
       <!-- 放置一个弹层 用来编辑新增节点 -->
-      <el-dialog :visible="showDialog" title="新增">
+      <el-dialog :visible="showDialog" :title="title" @close="btnCancel">
         <!-- 表单 -->
         <el-form label-width="120px" :data="formData">
           <el-form-item label="权限名称" prop="name">
@@ -46,7 +46,7 @@
         <el-row slot="footer" type="flex" justify="center">
           <el-col :span="6">
             <el-button size="small" type="primary" @click="btnOk">确定</el-button>
-            <el-button size="small">取消</el-button>
+            <el-button size="small" @click="btnCancel">取消</el-button>
           </el-col>
         </el-row>
       </el-dialog>
@@ -75,6 +75,11 @@ export default {
         enVisible: ''
       },
       showDialog: false
+    }
+  },
+  computed: {
+    title() {
+      return this.formData.id ? '编辑权限' : '增加权限'
     }
   },
   created() {
@@ -117,6 +122,18 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    btnCancel() {
+      this.formData = {
+        name: '',
+        type: 1,
+        code: '',
+        description: '',
+        pid: '',
+        enVisible: ''
+      }
+      this.getPermissionList()
+      this.showDialog = false
     }
 
   }
