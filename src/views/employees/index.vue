@@ -25,8 +25,9 @@
               <img
                 slot="reference"
                 v-imageerror="require('@/assets/common/bigUserHeader.png')"
-                :src="row.staffPhoto "
+                :src="row.staffPhoto"
                 style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+                @click="row.staffPhoto?showUserStaffPhoto(row.staffPhoto):showCodeDialog=false"
               >
             </template>
           </el-table-column>
@@ -72,7 +73,7 @@
       <el-dialog title="二维码" :visible.sync="showCodeDialog">
         <el-row type="flex" justify="center">
           <canvas ref="myCanvas" />
-          123
+          {{ imageUrl }}
         </el-row>
       </el-dialog>
     </div>
@@ -98,7 +99,8 @@ export default {
         size: 10,
         total: 0
       },
-      showDialog: false
+      showDialog: false,
+      imageUrl: ''
     }
   },
   created() {
@@ -192,6 +194,10 @@ export default {
         console.log(array, '-------------------------------------')
       }
       return array
+    },
+    showUserStaffPhoto(imgURl) {
+      this.showCodeDialog = true
+      this.imageUrl = imgURl
     }
 
   }
