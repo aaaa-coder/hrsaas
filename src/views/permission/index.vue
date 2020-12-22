@@ -17,7 +17,7 @@
           <template slot-scope="{row}">
             <el-button type="primary" size="mini" @click="addPermission(2,row.id)">添加</el-button>
             <el-button type="primary" size="mini" @click="editPermission(row.id)">编辑</el-button>
-            <el-button type="primary" size="mini">删除</el-button>
+            <el-button type="primary" size="mini" @click="delPermission(row.id)">删除</el-button>
           </template>
         </el-table-column>
 
@@ -56,7 +56,7 @@
 
 <script>
 import PageTools from '@/components/PageTools'
-import { getPermissionList, addPermission, getPermissionDetail, updatePermission } from '@/api/permission'
+import { getPermissionList, addPermission, getPermissionDetail, updatePermission, delPermission } from '@/api/permission'
 import { convertTreeData } from '@/utils/index'
 
 export default {
@@ -94,7 +94,15 @@ export default {
       this.showDialog = true
       this.formData = await getPermissionDetail(id)
     },
-
+    async delPermission(id) {
+      try {
+        await delPermission(id)
+        this.$message.success('删除权限成功')
+        this.getPermissionList()
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async btnOk() {
       try {
         if (this.formData.id) {
