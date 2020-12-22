@@ -26,7 +26,7 @@
 
 <script>
 import COS from 'cos-js-sdk-v5' // 引入腾讯云的包
-import { CloudConfig } from '@/CloudConfig'
+import { CloudConfig, Bucket, Region } from '@/CloudConfig'
 // 需要实例化
 const cos = new COS(CloudConfig) // 实例化的包 已经具有了上传的能力 可以上传到该账号里面的存储桶了
 export default {
@@ -90,8 +90,8 @@ export default {
         //  上传文件到腾讯云
         cos.putObject({
           // 配置
-          Bucket: 'hello-man-1304560172', // 存储桶名称
-          Region: 'ap-guangzhou', // 存储桶地域
+          Bucket: Bucket, // 存储桶名称
+          Region: Region, // 存储桶地域
           Key: params.file.name, // 文件名作为key
           StorageClass: 'STANDARD', // 此类写死
           Body: params.file, // 将本地的文件赋值给腾讯云配置
