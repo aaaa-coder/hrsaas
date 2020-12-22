@@ -56,8 +56,9 @@
 
 <script>
 import PageTools from '@/components/PageTools'
-import { getPermissionList } from '@/api/permission'
+import { getPermissionList, addPermission } from '@/api/permission'
 import { convertTreeData } from '@/utils/index'
+
 export default {
   components: {
     PageTools
@@ -90,7 +91,15 @@ export default {
       this.showDialog = true
     },
     btnOk() {
-      console.log(this.formData)
+      try {
+        const data = addPermission(this.formData)
+        console.log(data)
+        this.$message.success('权限添加成功')
+        this.getPermissionList()
+        this.showDialog = false
+      } catch (error) {
+        console.log(error)
+      }
     }
 
   }
