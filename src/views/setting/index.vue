@@ -116,7 +116,7 @@
         <!-- 确定 取消 -->
         <el-row slot="footer" type="flex" justify="center">
           <el-col :span="6">
-            <el-button type="primary" size="small">确定</el-button>
+            <el-button type="primary" size="small" @click="btnAddPerm">确定</el-button>
             <el-button size="small">取消</el-button>
           </el-col>
         </el-row>
@@ -127,13 +127,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole, addRole } from '@/api/setting'
+import { deleteRole, getCompanyInfo, getRoleDetail, getRoleList, updateRole, addRole, assignPerm } from '@/api/setting'
 
 import { getPermissionList } from '@/api/permission'
 import { convertTreeData } from '@/utils'
 export default {
   data() {
     return {
+      roleId: '',
       permList: [],
       selectCheck: [],
       showPermDialog: false,
@@ -244,6 +245,8 @@ export default {
     },
     async editPerm(id) {
       try {
+        // 先保存id
+        this.roleId = id
         // 获取权限列表
         const data = await getPermissionList(id)
         this.permList = convertTreeData(data, '0')
@@ -254,6 +257,16 @@ export default {
         console.log(error)
       }
       this.showPermDialog = true
+    },
+    async btnAddPerm() {
+      try {
+        const id = this.roleId
+        // 调用树形组件的获取id方法
+        const permIds = this.$refs.permTree.getCheckedKeys()
+        await assignPerm({ id: id, permIds: permIds })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
