@@ -56,7 +56,7 @@
 
 <script>
 import PageTools from '@/components/PageTools'
-import { getPermissionList, addPermission, getPermissionDetail } from '@/api/permission'
+import { getPermissionList, addPermission, getPermissionDetail, updatePermission } from '@/api/permission'
 import { convertTreeData } from '@/utils/index'
 
 export default {
@@ -94,10 +94,12 @@ export default {
       this.showDialog = true
       this.formData = await getPermissionDetail(id)
     },
+
     async btnOk() {
       try {
         if (this.formData.id) {
-          this.editPermission()
+          await updatePermission(this.formData)
+          this.$message.success('修改权限成功')
         } else {
           await addPermission(this.formData)
           this.$message.success('权限添加成功')
