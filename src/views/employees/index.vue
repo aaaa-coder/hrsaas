@@ -70,10 +70,9 @@
       </el-card>
       <!-- diglog框 -->
       <AddEmployee :show-dialog.sync="showDialog" />
-      <el-dialog title="二维码" :visible.sync="showCodeDialog">
+      <el-dialog title="二维码" :visible.sync="showCodeDialog" @opened="showerweima">
         <el-row type="flex" justify="center">
           <canvas ref="myCanvas" />
-          {{ imageUrl }}
         </el-row>
       </el-dialog>
     </div>
@@ -85,6 +84,7 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee'
 import { formatDate } from '@/filters'
+import QRcode from 'qrcode'
 
 export default {
   components: {
@@ -195,9 +195,13 @@ export default {
       }
       return array
     },
+    // 点头像 弹出显示框
     showUserStaffPhoto(imgURl) {
       this.showCodeDialog = true
       this.imageUrl = imgURl
+    },
+    showerweima() {
+      QRcode.toCanvas(this.$refs.myCanvas, this.imageUrl)
     }
 
   }
