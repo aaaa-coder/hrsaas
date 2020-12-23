@@ -1,7 +1,7 @@
 import { setToken, getToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getInfo as getUserInfo, getDetailById } from '@/api/user'
 import { Message } from 'element-ui'
-import { resetRouter } from '@/router'
+// import { resetRouter } from '@/router'
 
 export default {
   namespaced: true,
@@ -57,7 +57,11 @@ export default {
       commit('removeToken')
       // 删除用户信息
       commit('removeUserInfo')
-      resetRouter()
+      // 清楚路由权限
+      // resetRouter()
+      commit('permission/setRoutes', [], {
+        root: true
+      })
     }
   }
 }
