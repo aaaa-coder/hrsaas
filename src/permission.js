@@ -24,6 +24,8 @@ router.beforeEach(async(to, from, next) => {
         console.log(roles)
         // 过滤掉权限路由以外的路由
         const MyRoutes = asyncRoutes.filter(item => { roles.menus.indexOf(item.name) > -1 })
+        // 404 page must be placed at the end !!!
+        MyRoutes.push({ path: '*', redirect: '/404', hidden: true })
         // 添加动态路由
         router.addRoutes(MyRoutes)
         next(to.path)
