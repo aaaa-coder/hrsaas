@@ -31,7 +31,7 @@
               @click="editPermission(row.id)"
             >编辑</el-button>
             <el-button
-              type="primary"
+              type="danger"
               size="mini"
               @click="delPermission(row.id)"
             >删除</el-button>
