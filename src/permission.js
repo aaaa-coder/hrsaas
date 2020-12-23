@@ -21,7 +21,7 @@ router.beforeEach(async(to, from, next) => {
         const { roles } = await store.dispatch('user/getDetailById')
         console.log('---------------')
         console.log(roles)
-        const MyRoutes = await store.dispatch('permission/filterRoutes')
+        const MyRoutes = await store.dispatch('permission/filterRoutes', roles)
         // 添加动态路由
         router.addRoutes(MyRoutes)
         next(to.path)

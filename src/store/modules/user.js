@@ -48,7 +48,6 @@ export default {
       const baseInfo = await getDetailById(result.userId)
       // 解开拼接
       const baseResult = { ...result, ...baseInfo }
-      console.log(baseResult)
       commit('setUserInfo', baseResult)
       return baseResult
     },

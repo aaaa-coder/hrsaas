@@ -5,18 +5,23 @@ const state = {
 
 const mutations = {
   setRoutes(state, payload) {
+    console.log('动态路由---------------------')
+    console.log(payload)
     state.routes = [...constantRoutes, ...payload]
+    console.log(state.routes)
   }
 }
 
 const actions = {
   filterRoutes(context, payload) {
     // 过滤掉权限路由以外的路由
-    const MyRoutes = asyncRoutes.filter(item => { payload.menus.indexOf(item.name) > -1 })
+    console.log('传递的payload------------------------------------------')
+    console.log(payload)
+    const myRoutes = asyncRoutes.filter(item => payload.menus.indexOf(item.name) > -1)
     // 404 page must be placed at the end !!!
-    MyRoutes.push({ path: '*', redirect: '/404', hidden: true })
-    context.commit('setRoutes', MyRoutes)
-    return MyRoutes
+    myRoutes.push({ path: '*', redirect: '/404', hidden: true })
+    context.commit('setRoutes', myRoutes)
+    return myRoutes
   }
 }
 

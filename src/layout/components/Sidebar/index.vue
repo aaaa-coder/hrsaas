@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('permission')
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
@@ -30,9 +31,7 @@ export default {
     ...mapGetters([
       'sidebar'
     ]),
-    routes() {
-      return this.$router.options.routes
-    },
+    ...mapState(['routes']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
