@@ -25,14 +25,14 @@
       <!-- 放置一个弹层 用来编辑新增节点 -->
       <el-dialog :visible="showDialog" :title="title" @close="btnCancel">
         <!-- 表单 -->
-        <el-form label-width="120px" :data="formData">
+        <el-form ref="permForm" label-width="120px" :data="formData" :rules="rules" :model="formData">
           <el-form-item label="权限名称" prop="name">
             <el-input v-model="formData.name" style="width:90%" />
           </el-form-item>
           <el-form-item label="权限标识" prop="code">
             <el-input v-model="formData.code" style="width:90%" />
           </el-form-item>
-          <el-form-item label="权限描述">
+          <el-form-item label="权限描述" prop="description">
             <el-input v-model="formData.description" style="width:90%" />
           </el-form-item>
           <el-form-item label="开启">
@@ -74,7 +74,15 @@ export default {
         pid: '',
         enVisible: ''
       },
-      showDialog: false
+      showDialog: false,
+      rules: {
+        name: [{ required: true, trigger: 'blur', message: '权限名不能为空' }],
+        code: [{ required: true, trigger: 'blur', message: '权限标识不能为空' }],
+        description: [
+          { required: true, message: '权限描述不能为空', trigger: 'blur' },
+          { trigger: 'blur', min: 5, max: 300, message: '权限描述字数在5-300之间' }
+        ]
+      }
     }
   },
   computed: {
@@ -110,6 +118,7 @@ export default {
     },
     async btnOk() {
       try {
+        this.$refs.permForm.validate()
         if (this.formData.id) {
           await updatePermission(this.formData)
           this.$message.success('修改权限成功')
@@ -132,6 +141,7 @@ export default {
         pid: '',
         enVisible: ''
       }
+      this.$refs.permForm.resetFields()
       this.getPermissionList()
       this.showDialog = false
     }
