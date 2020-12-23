@@ -3,7 +3,6 @@ import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import { asyncRoutes } from '@/router'
 // 设置白名单
 const whiteList = ['/login', '/404']
 
@@ -22,12 +21,9 @@ router.beforeEach(async(to, from, next) => {
         const { roles } = await store.dispatch('user/getDetailById')
         console.log('---------------')
         console.log(roles)
-        // 过滤掉权限路由以外的路由
-        const MyRoutes = asyncRoutes.filter(item => { roles.menus.indexOf(item.name) > -1 })
-        // 404 page must be placed at the end !!!
-        MyRoutes.push({ path: '*', redirect: '/404', hidden: true })
+
         // 添加动态路由
-        router.addRoutes(MyRoutes)
+        router.addRoutes(this.$store.state.permission.state)
         next(to.path)
       } else {
         next()
