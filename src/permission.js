@@ -19,10 +19,13 @@ router.beforeEach(async(to, from, next) => {
       if (!store.getters.userId) {
         // debugger
         // 获取用户信息
-        const data = await store.dispatch('user/getUserInfo')
-        console.log(data)
+        const { roles } = await store.dispatch('user/getDetailById')
+        console.log('---------------')
+        console.log(roles)
+        // 过滤掉权限路由以外的路由
+        const MyRoutes = asyncRoutes.filter(item => { roles.menus.indexOf(item.name) > -1 })
         // 添加动态路由
-        router.addRoutes(asyncRoutes)
+        router.addRoutes(MyRoutes)
         next(to.path)
       } else {
         next()
