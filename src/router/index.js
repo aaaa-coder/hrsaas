@@ -40,6 +40,7 @@ import testRouter from './modules/test'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+import userRouter from './modules/user'
 export const constantRoutes = [
   {
     path: '/login',
@@ -75,7 +76,8 @@ export const constantRoutes = [
       }
     ]
 
-  }
+  },
+  userRouter
 
 ]
 // 到处动态路由
