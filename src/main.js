@@ -26,6 +26,10 @@ Vue.use(ElementUI)
 import components from '@/components'
 Vue.use(components)
 
+// 混入mixin
+import { checkPermissionMixin } from '@/mixin'
+Vue.mixin(checkPermissionMixin)
+
 import * as filters from '@/filters'
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key])
