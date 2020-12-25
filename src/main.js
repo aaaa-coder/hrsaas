@@ -35,8 +35,8 @@ import Print from 'vue-print-nb'
 Vue.use(Print)
 
 // 混入mixin
-// import { checkPermissionMixin } from '@/mixin'
-// Vue.mixin(checkPermissionMixin)
+import { checkPermissionMiXin } from '@/mixin'
+Vue.mixin(checkPermissionMiXin)
 
 Vue.config.productionTip = false
 
