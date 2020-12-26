@@ -12,6 +12,9 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <div class="right-menu-item">
+        <ScreenFull />
+      </div>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imageerror="defaultImg" :src="staffPhoto" class="user-avatar">
@@ -37,10 +40,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
+import ScreenFull from '@/components/ScreenFull'
 
 export default {
   components: {
-    Hamburger
+    Hamburger,
+    ScreenFull
   },
   data() {
     return {

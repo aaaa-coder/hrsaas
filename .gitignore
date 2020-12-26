@@ -16,3 +16,4 @@ tests/**/coverage/
 *.sln
 src/CloudConfig.js
 debug.log
+debug.log
