@@ -2,6 +2,7 @@ import PageTools from '@/components/PageTools'
 import UploadExcel from './UploadExcel'
 import ImageUpload from './ImageUpload'
 import ScreenFull from './ScreenFull'
+import ThemePicker from './ThemePicker'
 
 export default {
   install(Vue) {
@@ -9,5 +10,6 @@ export default {
     Vue.component('UploadExcel', UploadExcel)
     Vue.component('ImageUpload', ImageUpload)
     Vue.component('ScreenFull', ScreenFull)
+    Vue.component('ThemePicker', ThemePicker)
   }
 }

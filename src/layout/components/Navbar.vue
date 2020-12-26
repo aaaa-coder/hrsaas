@@ -15,7 +15,10 @@
       <div class="right-menu-item">
         <ScreenFull />
       </div>
-      <el-dropdown class="avatar-container" trigger="click">
+      <div class="right-menu-item" style="margin-top:15px">
+        <ThemePicker />
+      </div>
+      <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img v-imageerror="defaultImg" :src="staffPhoto" class="user-avatar">
           <span class="name">{{ name }}</span>
@@ -41,11 +44,13 @@
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import ScreenFull from '@/components/ScreenFull'
+import ThemePicker from '@/components/ThemePicker'
 
 export default {
   components: {
     Hamburger,
-    ScreenFull
+    ScreenFull,
+    ThemePicker
   },
   data() {
     return {
@@ -95,6 +100,8 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
+    display: flex;
+    align-items: center;
     line-height: 50px;
 
     &:focus {
@@ -104,10 +111,8 @@ export default {
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
-      height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
 
       &.hover-effect {
         cursor: pointer;
