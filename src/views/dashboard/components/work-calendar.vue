@@ -23,7 +23,7 @@
 export default {
   filters: {
     getDay(date) {
-      console.log(date) // yyyy-mm-dd 拿到dd
+      // console.log(date) // yyyy-mm-dd 拿到dd
       const day = date.split('-')[2]
       return day.startsWith('0') ? day.substr(1) : day
     }
