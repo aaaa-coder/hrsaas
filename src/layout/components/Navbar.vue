@@ -51,6 +51,7 @@ import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import ScreenFull from '@/components/ScreenFull'
 import ThemePicker from '@/components/ThemePicker'
+import { setLang } from '@/utils/auth'
 
 export default {
   components: {
@@ -75,6 +76,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     setLang(lang) {
+      setLang(lang)
       this.$i18n.locale = lang
     }
   }

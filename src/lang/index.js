@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import langEN from 'element-ui/lib/locale/lang/en' // 引入饿了么的英文包
 import langZH from 'element-ui/lib/locale/lang/zh-CN' // 引入饿了么的中文包
+import Cookies from 'js-cookie'
+const lang = Cookies.get('lang')
 Vue.use(VueI18n)
 
 export default new VueI18n({
@@ -33,6 +35,6 @@ export default new VueI18n({
       ...langZH
     }
   },
-  locale: 'en'
+  locale: lang
 
 })

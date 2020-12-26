@@ -21,3 +21,11 @@ export function setTimeStamp() {
 export function getTimeStamp() {
   return Cookies.get(TimeKey)
 }
+
+export function setLang(lang) {
+  return Cookies.set('lang', lang)
+}
+
+export function getLang() {
+  return Cookies.get('lang')
+}
