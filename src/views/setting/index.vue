@@ -35,7 +35,7 @@
               <!-- 分页组件 -->
               <el-pagination
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="total"
+                :total="totalPage"
                 :page-size="5"
                 :page-sizes="[2, 3, 5, 10, 20]"
                 @size-change="sizeChange"
@@ -144,7 +144,7 @@ export default {
         page: 1,
         pagesize: 10
       },
-      total: null,
+      totalPage: 0,
       companyInfo: {},
       roleForm: {
         name: '',
@@ -178,7 +178,7 @@ export default {
     // 获取角色列表
     async getRoleList() {
       const { total, rows } = await getRoleList(this.pageInfo)
-      this.total = total
+      this.totalPage = total
       this.list = rows
     },
     async getCompanyInfo() {
