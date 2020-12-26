@@ -83,8 +83,9 @@
         <el-card class="box-card">
           <div slot="header" class="header">
             <span>绩效指数</span>
+            <Radar />
           </div>
-        <!-- 放置雷达图 -->
+          <!-- 放置雷达图 -->
         </el-card>
         <!-- 帮助连接 -->
         <el-card class="box-card">
@@ -122,10 +123,11 @@
 <script>
 import { mapGetters, createNamespacedHelpers } from 'vuex'
 import WorkCalendar from './components/work-calendar'
+import Radar from './components/radar-echart'
 const { mapState } = createNamespacedHelpers('user')
 export default {
   name: 'Dashboard',
-  components: { WorkCalendar },
+  components: { WorkCalendar, Radar },
 
   computed: {
     ...mapGetters([
