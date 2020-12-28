@@ -3,6 +3,8 @@ import VueI18n from 'vue-i18n'
 import langEN from 'element-ui/lib/locale/lang/en' // 引入饿了么的英文包
 import langZH from 'element-ui/lib/locale/lang/zh-CN' // 引入饿了么的中文包
 import Cookies from 'js-cookie'
+import en from './en'
+import zh from './zh'
 const lang = Cookies.get('lang')
 Vue.use(VueI18n)
 
@@ -10,7 +12,7 @@ export default new VueI18n({
   messages: {
     en: {
       hello: 'hello',
-      Dashboard: 'Dashboard',
+      dashboard: 'Dashboard',
       departments: 'departments',
       settings: 'settings',
       approvals: 'approvals',
@@ -19,11 +21,15 @@ export default new VueI18n({
       attendances: 'attendances',
       salarys: 'salarys',
       social_securitys: 'social_securitys',
-      ...langEN
+      ...langEN,
+      route: {
+        dashboard: 'Dashboard'
+      },
+      ...en
     },
     cn: {
       hello: '你好',
-      Dashboard: '首页',
+      dashboard: '首页',
       departments: '组织架构',
       settings: '公司设置',
       approvals: '审批',
@@ -32,7 +38,11 @@ export default new VueI18n({
       attendances: '考勤',
       salarys: '工资',
       social_securitys: '社保',
-      ...langZH
+      ...langZH,
+      route: {
+        dashboard: '首页'
+      },
+      ...zh
     }
   },
   locale: lang
